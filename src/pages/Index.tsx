@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
 
+const inputCls = "w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors";
+const btnPrimary = "px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20";
+const btnOutline = "px-8 py-4 border-2 border-primary/30 text-primary rounded-full font-semibold text-lg hover:border-primary hover:bg-primary/5 transition-all";
+
 const Index = () => {
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
   const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalProduct, setModalProduct] = useState("");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    const ids = ["hero", "pain", "solutions", "massager", "gr", "injector", "cta"];
+    const ids = [
+      "hero","pain","solutions","massager","gr","injector",
+      "perf","conveyor","catalog","benefits","compare",
+      "selector","service","about","faq","contacts"
+    ];
     setVisibleSections((prev) => ({ ...prev, hero: true }));
     const observers: Record<string, IntersectionObserver> = {};
     ids.forEach((id) => {
@@ -29,11 +40,12 @@ const Index = () => {
   const vis = (id: string) => visibleSections[id];
 
   const navLinks = [
-    { href: "#solutions", label: "Решения" },
-    { href: "#massager", label: "Массажеры" },
-    { href: "#gr", label: "Серия GR" },
-    { href: "#injector", label: "Инъекторы" },
-    { href: "#cta", label: "Контакты" },
+    { href: "#solutions",  label: "Решения" },
+    { href: "#massager",   label: "Массажеры" },
+    { href: "#injector",   label: "Инъекторы" },
+    { href: "#catalog",    label: "Каталог" },
+    { href: "#selector",   label: "Подбор" },
+    { href: "#contacts",   label: "Контакты" },
   ];
 
   return (
@@ -523,62 +535,751 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="cta" className="py-28 px-6 bg-primary/5">
-        <div className={`max-w-4xl mx-auto transition-all duration-1000 ${vis("cta") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <div className="p-12 bg-white border-2 border-primary/20 rounded-3xl shadow-2xl shadow-primary/10 text-center">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-center">
-                <Icon name="Phone" size={36} className="text-primary" />
+
+      {/* ─── ЭКРАН 7: ПРОИЗВОДИТЕЛЬНОСТЬ / МОЙКА ─── */}
+      <section id="perf" className="py-28 px-6 bg-primary/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className={`transition-all duration-1000 ${vis("perf") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <span className="text-xs font-semibold tracking-widest text-primary uppercase">Производительность и обслуживание</span>
+              <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-6 text-foreground leading-tight">
+                Высокая скорость и простая мойка
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Оборудование спроектировано для интенсивного производства: максимальная пропускная способность и минимальное время на санитарную обработку между партиями.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                {[
+                  { icon: "Zap",         value: "До 4 т/час",            sub: "Производительность инъектора" },
+                  { icon: "Gauge",       value: "До 4,3 бар",            sub: "Для вязких маринадов" },
+                  { icon: "Wrench",      value: "Без инструмента",       sub: "Конвейер снимается легко" },
+                ].map((tile, i) => (
+                  <div key={i} className="flex flex-col items-center text-center p-6 bg-white border-2 border-primary/15 rounded-2xl shadow-sm hover:shadow-md hover:border-primary/40 transition-all">
+                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-3">
+                      <Icon name={tile.icon} fallback="Star" size={28} className="text-primary" />
+                    </div>
+                    <p className="font-black text-2xl text-foreground leading-tight mb-1">{tile.value}</p>
+                    <p className="text-sm text-muted-foreground">{tile.sub}</p>
+                  </div>
+                ))}
               </div>
-            </div>
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Получить предложение</span>
-            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-4 text-foreground leading-tight">
-              Подберём оборудование<br />под ваш продукт
-            </h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-              Оставьте контакт — технолог перезвонит, разберёт вашу ситуацию и предложит оптимальный режим и комплектацию.
-            </p>
-
-            <div className="grid sm:grid-cols-3 gap-4 mb-6 max-w-2xl mx-auto">
-              <input type="text"  placeholder="Компания" className="px-4 py-3.5 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-              <input type="tel"   placeholder="Телефон"  className="px-4 py-3.5 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-              <input type="email" placeholder="Почта"    className="px-4 py-3.5 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-            </div>
-            <button className="px-12 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/20">
-              Отправить заявку
-            </button>
-
-            <div className="grid grid-cols-3 gap-8 mt-14 pt-8 border-t border-border">
-              {[
-                { value: "+20–30%", label: "Ориентир по выходу при корректной технологии", icon: "TrendingUp" },
-                { value: "SUS304",  label: "Пищевая нержавейка",                           icon: "Shield" },
-                { value: "4 т/ч",   label: "Производительность инъектора",                 icon: "Zap" },
-              ].map((stat, i) => (
-                <div key={i} className="flex flex-col items-center gap-2">
-                  <Icon name={stat.icon} fallback="Star" size={24} className="text-primary" />
-                  <div className="text-3xl font-black text-primary">{stat.value}</div>
-                  <p className="text-xs text-muted-foreground text-center">{stat.label}</p>
+              <div className="flex items-start gap-4 p-5 bg-white border border-primary/20 rounded-2xl mb-8 shadow-sm">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Icon name="Bird" fallback="Star" size={24} className="text-primary" />
                 </div>
-              ))}
+                <div>
+                  <p className="font-bold text-base text-foreground">Подпружиненные иглы</p>
+                  <p className="text-muted-foreground text-sm">На кости и тушки птицы — иглы пружинят, не ломаются при контакте с костью, равномерно покрывают продукт</p>
+                </div>
+              </div>
+              <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+                Уточнить комплектацию
+                <Icon name="ArrowRight" size={18} />
+              </a>
+            </div>
+
+            <div className={`transition-all duration-1000 delay-300 ${vis("perf") ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              <div className="p-8 bg-white border border-border rounded-3xl shadow-xl">
+                <h4 className="text-lg font-bold text-foreground mb-6 text-center">Конвейер — быстросъём</h4>
+                <div className="flex justify-center mb-6">
+                  <div className="relative w-48 h-48 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-primary/5 rounded-full" />
+                    <div className="relative flex flex-col items-center gap-2">
+                      <Icon name="Workflow" fallback="GitBranch" size={64} className="text-primary" />
+                      <span className="text-sm font-semibold text-primary">Быстросъёмный конвейер</span>
+                    </div>
+                    <div className="absolute top-2 right-2 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Icon name="Unlock" size={18} className="text-primary" />
+                    </div>
+                    <div className="absolute bottom-2 left-2 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Icon name="Droplets" size={18} className="text-primary" />
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { icon: "Unlock",      text: "Конвейер снимается без инструмента за 2 минуты" },
+                    { icon: "Droplets",    text: "Полная мойка без разборки корпуса" },
+                    { icon: "Shield",      text: "SUS304 — стойкость к дезинфектантам" },
+                    { icon: "Timer",       text: "Меньше простоев между партиями" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 bg-primary/5 border border-primary/10 rounded-xl">
+                      <Icon name={item.icon} fallback="CheckCircle" size={16} className="text-primary flex-shrink-0" />
+                      <span className="text-sm text-foreground">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-border py-10 px-6 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
-          <div>
-            <p className="font-bold text-base text-foreground mb-1">Daribo & Niro-Tech</p>
-            <p className="text-xs">Оборудование для посола и маринования</p>
+      {/* ─── ЭКРАН 8: КОНВЕЙЕР И ШАГ ─── */}
+      <section id="conveyor" className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className={`order-2 lg:order-1 transition-all duration-1000 ${vis("conveyor") ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              <div className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl shadow-xl">
+                <h4 className="text-lg font-bold text-foreground mb-6 text-center">Зубчатый конвейер + шаг подачи</h4>
+                <div className="flex justify-center mb-6">
+                  <div className="relative">
+                    <div className="w-44 h-44 bg-white border-2 border-primary/20 rounded-2xl flex items-center justify-center shadow-sm">
+                      <div className="flex flex-col items-center gap-2">
+                        <Icon name="MoveHorizontal" size={52} className="text-primary" />
+                        <span className="text-xs font-bold text-primary">ШАГ 15–60 мм</span>
+                      </div>
+                    </div>
+                    <div className="absolute -top-3 -right-3 w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center shadow-md">
+                      <Icon name="Ruler" size={22} />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-3 mt-4">
+                  {["15 мм", "30 мм", "45 мм", "60 мм", "Авто", "Повтор"].map((v, i) => (
+                    <div key={i} className="p-3 bg-white border border-primary/15 rounded-xl text-center">
+                      <p className="font-bold text-sm text-foreground">{v}</p>
+                      <p className="text-xs text-muted-foreground">{i < 4 ? "шаг подачи" : i === 4 ? "режим" : "программа"}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={`order-1 lg:order-2 transition-all duration-1000 ${vis("conveyor") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <span className="text-xs font-semibold tracking-widest text-primary uppercase">Точная подача</span>
+              <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-6 text-foreground leading-tight">
+                Точная подача и шаг 15–60 мм
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                Зубчатый конвейер с направляющими обеспечивает точное и стабильное перемещение продукта под иглы. Настраиваемый шаг подачи от 15 до 60 мм — под любой формат и размер куска.
+              </p>
+              <div className="space-y-4 mb-10">
+                {[
+                  { icon: "GitBranch",    text: "Зубчатый конвейер с боковыми направляющими — продукт не сдвигается" },
+                  { icon: "Ruler",        text: "Шаг 15–60 мм — точная настройка под любой продукт" },
+                  { icon: "RefreshCw",    text: "Повторяемость: одинаковый шаг на каждой партии" },
+                  { icon: "Settings2",    text: "Быстрая смена параметров без остановки линии" },
+                  { icon: "MoveHorizontal", text: "Равномерное покрытие иглами по всей длине куска" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-4 p-4 bg-primary/5 border border-primary/15 rounded-xl">
+                    <div className="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-lg flex-shrink-0">
+                      <Icon name={item.icon} fallback="CheckCircle" size={18} className="text-primary" />
+                    </div>
+                    <span className="text-base text-foreground">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+                Проконсультироваться
+                <Icon name="MessageCircle" size={18} />
+              </a>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-6 justify-center">
-            {navLinks.map((l) => (
-              <a key={l.href} href={l.href} className="hover:text-primary transition-colors text-xs">{l.label}</a>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 9: КАТАЛОГ ─── */}
+      <section id="catalog" className="py-28 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-12 transition-all duration-1000 ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Оборудование</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Каталог оборудования
+            </h2>
+            <p className="text-lg text-muted-foreground mt-4 max-w-xl mx-auto">Выберите тип, сырьё или опции — подберём оптимальную конфигурацию</p>
+          </div>
+
+          {/* Фильтры */}
+          <div className={`flex flex-wrap gap-3 mb-10 transition-all duration-700 ${vis("catalog") ? "opacity-100" : "opacity-0"}`}>
+            {[
+              { label: "Тип", options: ["Все", "Массажер", "Инъектор"] },
+              { label: "Сырьё", options: ["Все", "Мясо", "Птица", "Рыба"] },
+              { label: "Опции", options: ["Все", "PLC", "Вакуум", "Подпружиненные иглы"] },
+            ].map((group, i) => (
+              <div key={i} className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-semibold text-muted-foreground">{group.label}:</span>
+                {group.options.map((opt, j) => (
+                  <button key={j} className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${j === 0 ? "bg-primary text-white border-primary" : "border-border text-muted-foreground hover:border-primary hover:text-primary bg-white"}`}>
+                    {opt}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
-          <p className="text-xs">© 2025 Все права защищены</p>
+
+          {/* Карточки */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+            {[
+              {
+                name: "Вакуумный массажер GR-200",
+                type: "Массажер",
+                icon: "RefreshCw",
+                specs: ["Объём: 200 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Продукты: мясо, птица, рыба"],
+                badges: ["PLC", "Вакуум"],
+              },
+              {
+                name: "Вакуумный массажер GR-500",
+                type: "Массажер",
+                icon: "RefreshCw",
+                specs: ["Объём: 500 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Продукты: мясо, птица"],
+                badges: ["PLC", "Вакуум", "99 программ"],
+              },
+              {
+                name: "Вакуумный массажер GR-1000",
+                type: "Массажер",
+                icon: "RefreshCw",
+                specs: ["Объём: 1000 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Большие партии"],
+                badges: ["PLC", "Вакуум"],
+              },
+              {
+                name: "Инъектор рассола NI-84",
+                type: "Инъектор",
+                icon: "Pipette",
+                specs: ["84 иглы", "До 4 т/ч", "До 4,3 бар", "Регистр давления"],
+                badges: ["84 иглы", "Быстросъём"],
+              },
+              {
+                name: "Инъектор NI-84P (птица)",
+                type: "Инъектор",
+                icon: "Pipette",
+                specs: ["84 иглы подпружиненные", "Тушки птицы + кость", "До 3,5 т/ч", "Регистр давления"],
+                badges: ["Подпружиненные", "Птица"],
+              },
+              {
+                name: "Инъектор NI-56",
+                type: "Инъектор",
+                icon: "Pipette",
+                specs: ["56 игл", "До 2 т/ч", "До 4 бар", "Малые объёмы"],
+                badges: ["Компакт"],
+              },
+            ].map((card, i) => (
+              <div key={i} className={`bg-white border border-border rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all flex flex-col ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${i * 80}ms`, transitionDuration: "700ms" }}>
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <Icon name={card.icon} fallback="Star" size={32} className="text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">{card.type}</span>
+                <h3 className="font-bold text-xl text-foreground mb-4">{card.name}</h3>
+                <ul className="space-y-1.5 mb-4 flex-1">
+                  {card.specs.map((s, j) => (
+                    <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Icon name="ChevronRight" size={14} className="text-primary flex-shrink-0" />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {card.badges.map((b, j) => (
+                    <span key={j} className="text-xs font-medium px-3 py-1 bg-primary/8 text-primary border border-primary/20 rounded-full">{b}</span>
+                  ))}
+                </div>
+                <button
+                  onClick={() => { setModalProduct(card.name); setModalOpen(true); }}
+                  className="w-full py-3 bg-primary text-white rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all"
+                >
+                  Запросить цену / КП
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Форма под каталогом */}
+          <div className={`p-10 bg-white border-2 border-primary/15 rounded-3xl shadow-sm transition-all duration-1000 ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <h3 className="text-3xl font-display font-black text-foreground mb-3">Не нашли нужную модель?</h3>
+                <p className="text-lg text-muted-foreground">Опишите задачу — подберём конфигурацию под ваш объём и продукт.</p>
+              </div>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <input type="text"  placeholder="Компания" className={inputCls} />
+                  <input type="tel"   placeholder="Телефон"  className={inputCls} />
+                </div>
+                <input type="email"   placeholder="Почта"    className={inputCls} />
+                <textarea placeholder="Комментарий (продукт, объём, задача)" rows={2} className={inputCls + " resize-none"} />
+                <button className="w-full py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-sm">
+                  Запросить подбор
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 10: ПРЕИМУЩЕСТВА 6 ПЛИТОК ─── */}
+      <section id="benefits" className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("benefits") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">После внедрения</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Что меняется после внедрения
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              { icon: "TrendingUp",   title: "Выше выход",           desc: "Ориентир +20–30% влаги при корректной технологии и режиме" },
+              { icon: "Target",       title: "Стабильный посол",     desc: "Однородный цвет, вкус, текстура — без серых пятен и недосола" },
+              { icon: "Gauge",        title: "Быстрее цикл",         desc: "Вакуум и интенсивное массирование сокращают время выдержки" },
+              { icon: "ThumbsUp",     title: "Меньше брака",         desc: "Равномерная инъекция исключает пересол и недосол крупных кусков" },
+              { icon: "Repeat",       title: "Повторяемость",        desc: "Программы PLC: одинаковый результат на каждой партии" },
+              { icon: "Droplets",     title: "Санитария без потерь", desc: "Быстросъёмные детали — мойка без простоев и сложной разборки" },
+            ].map((tile, i) => (
+              <div key={i} className={`p-7 bg-background border border-border rounded-2xl hover:border-primary/40 hover:shadow-lg transition-all flex flex-col gap-4 ${vis("benefits") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${i * 90}ms`, transitionDuration: "700ms" }}>
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Icon name={tile.icon} fallback="Star" size={28} className="text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl text-foreground mb-2">{tile.title}</h3>
+                  <p className="text-muted-foreground text-base">{tile.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <a href="#selector" className={btnPrimary + " inline-flex items-center gap-2"}>
+              Рассчитать эффект
+              <Icon name="Calculator" size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 11: СРАВНЕНИЕ ─── */}
+      <section id="compare" className="py-28 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("compare") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Сравнение</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Почему это работает лучше
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-10">
+            {[
+              {
+                title: "Вакуумный массажер vs классический посол",
+                rows: [
+                  ["Параметр",              "Вакуумный массажер",    "Классический посол"],
+                  ["Время цикла",           "2–8 часов",             "12–72 часа"],
+                  ["Однородность посола",   "Высокая",               "Неравномерно"],
+                  ["Окисление",             "Минимальное (вакуум)",  "Высокое"],
+                  ["Выход",                 "+20–30% (ориентир)",    "Базовый"],
+                  ["Повторяемость",         "Да (программы PLC)",    "Зависит от операт."],
+                  ["Мойка",                 "Быстро, без разборки",  "Стандартная"],
+                ],
+              },
+              {
+                title: "Инъектор с регистром давления vs обычный",
+                rows: [
+                  ["Параметр",                   "Регистр давления",    "Обычный инъектор"],
+                  ["Давление на каждой игле",    "Одинаковое",          "Варьируется"],
+                  ["Риск серых пятен",           "Минимальный",         "Высокий"],
+                  ["Засор одной иглы",           "Остальные работают",  "Падает вся система"],
+                  ["Вязкие маринады",            "Да, до 4,3 бар",      "Ограниченно"],
+                  ["Кость / тушки птицы",        "Да (подпружинен.)",   "Нет"],
+                  ["Точность дозировки",         "Высокая",             "Средняя"],
+                ],
+              },
+            ].map((table, ti) => (
+              <div key={ti} className={`transition-all duration-700 ${vis("compare") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${ti * 200}ms` }}>
+                <h3 className="font-bold text-xl text-foreground mb-4">{table.title}</h3>
+                <div className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm">
+                  {table.rows.map((row, ri) => (
+                    <div key={ri} className={`grid grid-cols-3 text-sm ${ri === 0 ? "bg-primary/5 font-bold text-foreground" : "border-t border-border text-foreground"} hover:bg-primary/3 transition-colors`}>
+                      {row.map((cell, ci) => (
+                        <div key={ci} className={`px-4 py-3 ${ci === 1 && ri > 0 ? "text-primary font-semibold" : ""}`}>{cell}</div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+              Обсудить задачу
+              <Icon name="MessageSquare" size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 12: ПОДБОР + ФОРМА ─── */}
+      <section id="selector" className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("selector") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Подбор оборудования</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Ответьте на 6 вопросов — получите решение
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-14">
+            {/* Вопросы */}
+            <div className={`transition-all duration-1000 ${vis("selector") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
+              <div className="flex justify-center mb-8">
+                <div className="w-24 h-24 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-center">
+                  <Icon name="ClipboardList" size={48} className="text-primary" />
+                </div>
+              </div>
+              <div className="space-y-4">
+                {[
+                  { n: "01", q: "Какой продукт обрабатываете?",     hint: "Мясо / птица / рыба / деликатесы" },
+                  { n: "02", q: "Какой объём в смену (кг/ч)?",      hint: "Например, 500 кг/смену или 2 т/ч" },
+                  { n: "03", q: "Тип сырья?",                       hint: "Целые куски / тушки / филе / кость" },
+                  { n: "04", q: "Цель обработки?",                  hint: "Посол / маринование / ускорение / выход" },
+                  { n: "05", q: "Вязкость маринада?",               hint: "Жидкий рассол / густой / с кусочками" },
+                  { n: "06", q: "Нужна программируемость (PLC)?",   hint: "Да / нет / нужна консультация" },
+                ].map((q, i) => (
+                  <div key={i} className="flex items-start gap-4 p-5 bg-background border border-border rounded-xl hover:border-primary/40 transition-colors">
+                    <span className="font-black text-2xl text-primary/30 leading-none flex-shrink-0">{q.n}</span>
+                    <div>
+                      <p className="font-bold text-base text-foreground">{q.q}</p>
+                      <p className="text-sm text-muted-foreground">{q.hint}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Форма */}
+            <div className={`transition-all duration-1000 delay-300 ${vis("selector") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+              <div className="p-8 bg-background border-2 border-primary/15 rounded-3xl shadow-sm">
+                <h3 className="font-display font-bold text-2xl mb-2 text-foreground">Отправьте ответы — мы подберём</h3>
+                <p className="text-muted-foreground mb-6 text-sm">Технолог свяжется в течение 2 часов</p>
+                <div className="space-y-4">
+                  <input type="text"  placeholder="Имя"       className={inputCls} />
+                  <input type="text"  placeholder="Компания"  className={inputCls} />
+                  <input type="tel"   placeholder="Телефон"   className={inputCls} />
+                  <input type="email" placeholder="Почта"     className={inputCls} />
+                  <textarea placeholder="Комментарий: продукт, объём, задача..." rows={4} className={inputCls + " resize-none"} />
+                  <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
+                    Отправить запрос
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 13: ВНЕДРЕНИЕ И СЕРВИС ─── */}
+      <section id="service" className="py-28 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("service") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Внедрение и сервис</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              От подбора до запуска — под ключ
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6 mb-14">
+            {[
+              { icon: "ClipboardCheck", step: "01", title: "Подбор",                  desc: "Анализ задачи, продукта, объёма. Подбор модели и режима. КП в течение 24 ч." },
+              { icon: "Truck",          step: "02", title: "Поставка и монтаж",        desc: "Доставка, распаковка, установка на площадке. Подключение к коммуникациям." },
+              { icon: "GraduationCap",  step: "03", title: "Пусконаладка и обучение", desc: "Настройка режимов под ваш продукт. Обучение персонала, первые тестовые партии." },
+              { icon: "Wrench",         step: "04", title: "Сервис и запчасти",        desc: "Гарантийное и постгарантийное обслуживание. Наличие запчастей. Поддержка технолога." },
+            ].map((s, i) => (
+              <div key={i} className={`relative p-7 bg-white border border-border rounded-2xl shadow-sm hover:shadow-lg hover:border-primary/40 transition-all flex flex-col gap-4 ${vis("service") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${i * 100}ms`, transitionDuration: "700ms" }}>
+                <div className="flex items-center justify-between">
+                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Icon name={s.icon} fallback="Star" size={28} className="text-primary" />
+                  </div>
+                  <span className="font-black text-3xl text-primary/20">{s.step}</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl text-foreground mb-2">{s.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
+                </div>
+                {i < 3 && (
+                  <div className="hidden md:block absolute -right-4 top-1/2 -translate-y-1/2 z-10">
+                    <div className="w-8 h-8 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center">
+                      <Icon name="ChevronRight" size={16} className="text-primary" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+              Уточнить условия
+              <Icon name="ArrowRight" size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 14: О КОМПАНИИ ─── */}
+      <section id="about" className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className={`transition-all duration-1000 ${vis("about") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <span className="text-xs font-semibold tracking-widest text-primary uppercase">О компании</span>
+              <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-6 text-foreground leading-tight">
+                Daribo & Niro-Tech
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                <strong className="text-foreground">Daribo</strong> — Shanghai DARIBO Food Machinery Co., Ltd. Штаб-квартира в Шанхае, региональные офисы в Гуанчжоу, Фучжоу и Ухане. Специализация: промышленное оборудование для посола и маринования мяса, птицы и рыбы.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                <strong className="text-foreground">Niro-Tech</strong> — российский партнёр: поставка, подбор режимов, пусконаладка и сервисное сопровождение. Вместе — полный цикл от задачи до результата.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-10">
+                {[
+                  { icon: "Building2",  text: "Производитель: Шанхай" },
+                  { icon: "MapPin",     text: "Офисы: Гуанчжоу, Фучжоу, Ухань" },
+                  { icon: "Headphones", text: "Поддержка: Niro-Tech (РФ)" },
+                  { icon: "Settings",   text: "Подбор режимов и сервис" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 p-4 bg-primary/5 border border-primary/10 rounded-xl">
+                    <Icon name={item.icon} fallback="Star" size={18} className="text-primary flex-shrink-0" />
+                    <span className="text-sm font-medium text-foreground">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+                Связаться
+                <Icon name="Phone" size={18} />
+              </a>
+            </div>
+
+            <div className={`transition-all duration-1000 delay-300 ${vis("about") ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              <div className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl shadow-xl">
+                <div className="flex flex-col items-center gap-6">
+                  <div className="flex gap-6">
+                    <div className="w-28 h-28 bg-white border-2 border-primary/20 rounded-2xl flex items-center justify-center shadow-sm">
+                      <div className="flex flex-col items-center gap-1">
+                        <Icon name="Factory" size={36} className="text-primary" />
+                        <span className="text-xs font-bold text-primary">Daribo</span>
+                      </div>
+                    </div>
+                    <div className="w-28 h-28 bg-white border-2 border-primary/20 rounded-2xl flex items-center justify-center shadow-sm">
+                      <div className="flex flex-col items-center gap-1">
+                        <Icon name="Handshake" fallback="Users" size={36} className="text-primary" />
+                        <span className="text-xs font-bold text-primary">Niro-Tech</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-center">
+                    <Icon name="ArrowDown" size={24} className="text-primary/40" />
+                  </div>
+                  <div className="w-full p-5 bg-white border border-primary/20 rounded-2xl text-center shadow-sm">
+                    <Icon name="CheckCircle" size={32} className="text-primary mx-auto mb-2" />
+                    <p className="font-bold text-base text-foreground">Полный цикл внедрения</p>
+                    <p className="text-sm text-muted-foreground">Подбор → поставка → пусконаладка → сервис</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 15: FAQ ─── */}
+      <section id="faq" className="py-28 px-6 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("faq") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">FAQ</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Частые вопросы
+            </h2>
+          </div>
+          <div className="space-y-3 mb-12">
+            {[
+              { q: "Зачем нужен вакуум в массажере?",                     a: "Вакуум раскрывает поры и волокна сырья, позволяя рассолу проникать глубже. Дополнительно тормозит окисление жиров и улучшает цвет и сроки хранения продукта." },
+              { q: "Насколько вакуумный массажер ускоряет процесс?",      a: "В зависимости от продукта и режима — от 2 до 10 раз быстрее классического посола. Например, цикл на ветчину вместо 48 часов может составить 6–12 часов." },
+              { q: "Что происходит при засоре одной иглы?",               a: "При конструкции с регистром давления засор одной иглы не влияет на остальные — давление перераспределяется. В обычных инъекторах засор одной иглы снижает давление во всей системе." },
+              { q: "Работает ли с вязкими маринадами и специями?",        a: "Да. Инъекторы работают при давлении до 4,3 бар, что позволяет использовать густые маринады, соусы с частицами и специями без засора системы." },
+              { q: "Можно ли работать с тушками птицы и костью?",         a: "Да. Модели с подпружиненными иглами специально рассчитаны на работу с тушками птицы и продуктом на кости — иглы пружинят при контакте с костью, не ломаются." },
+              { q: "Как устроена мойка оборудования?",                    a: "Конвейер снимается без инструмента за 1–2 минуты. Корпус и внутренние поверхности из SUS304 легко моются стандартными дезинфектантами. Полная мойка занимает 15–30 минут." },
+              { q: "Что такое PLC и зачем нужны 99 программ?",            a: "PLC — программируемый логический контроллер. Позволяет сохранять до 99 рецептур (время, вакуум, скорость, направление, интервалы) и воспроизводить их в одно касание. Исключает человеческий фактор и обеспечивает повторяемость." },
+              { q: "Что нужно для подбора оборудования?",                 a: "Достаточно указать: продукт (мясо/птица/рыба), объём в смену (кг/ч или т/смену), тип сырья (куски, тушки, филе, кость), цель (посол, маринование, выход), вязкость маринада. Остальное уточним на звонке." },
+            ].map((faq, i) => (
+              <div key={i} className={`bg-white border border-border rounded-2xl overflow-hidden transition-all duration-700 ${vis("faq") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`} style={{ transitionDelay: `${i * 60}ms` }}>
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-primary/3 transition-colors"
+                >
+                  <span className="font-semibold text-base text-foreground pr-4">{faq.q}</span>
+                  <Icon name={openFaq === i ? "ChevronUp" : "ChevronDown"} size={20} className="text-primary flex-shrink-0" />
+                </button>
+                {openFaq === i && (
+                  <div className="px-6 pb-5 text-muted-foreground text-base leading-relaxed border-t border-border bg-primary/3">
+                    <div className="pt-4">{faq.a}</div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
+              Задать вопрос
+              <Icon name="MessageCircle" size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ЭКРАН 16: КОНТАКТЫ ─── */}
+      <section id="contacts" className="py-28 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-1000 ${vis("contacts") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Связаться</span>
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+              Обсудим вашу задачу
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-14 items-start">
+            {/* Левая — контакты + иллюстрация */}
+            <div className={`transition-all duration-1000 ${vis("contacts") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
+              <div className="flex justify-center mb-10">
+                <div className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl shadow-xl w-full max-w-sm">
+                  <div className="flex justify-center mb-6">
+                    <div className="w-28 h-28 bg-primary/10 rounded-2xl flex items-center justify-center">
+                      <Icon name="Factory" size={56} className="text-primary" />
+                    </div>
+                  </div>
+                  <p className="text-center text-sm font-medium text-muted-foreground mb-6">Оборудование в чистом пищевом цехе</p>
+                  <div className="space-y-4">
+                    {[
+                      { icon: "Phone",  label: "Телефон",  value: "+7 (000) 000-00-00" },
+                      { icon: "Mail",   label: "Почта",    value: "info@niro-tech.ru" },
+                      { icon: "Clock",  label: "График",   value: "Пн–Пт, 9:00–18:00 МСК" },
+                    ].map((c, i) => (
+                      <div key={i} className="flex items-center gap-4 p-4 bg-white border border-primary/10 rounded-xl">
+                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon name={c.icon} fallback="Star" size={18} className="text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">{c.label}</p>
+                          <p className="font-bold text-base text-foreground">{c.value}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Правая — форма */}
+            <div className={`transition-all duration-1000 delay-300 ${vis("contacts") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+              <div className="p-8 bg-background border-2 border-primary/15 rounded-3xl shadow-sm">
+                <h3 className="font-display font-bold text-2xl mb-2 text-foreground">Отправить запрос</h3>
+                <p className="text-muted-foreground mb-6 text-sm">Технолог ответит в течение 2 часов</p>
+                <div className="space-y-4">
+                  <input type="text"  placeholder="Имя"       className={inputCls} />
+                  <input type="text"  placeholder="Компания"  className={inputCls} />
+                  <input type="tel"   placeholder="Телефон"   className={inputCls} />
+                  <input type="email" placeholder="Почта"     className={inputCls} />
+                  <textarea placeholder="Комментарий (продукт, объём, задача)" rows={4} className={inputCls + " resize-none"} />
+                  <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
+                    Отправить запрос
+                  </button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Нажимая «Отправить», вы соглашаетесь с{" "}
+                    <a href="#" className="text-primary hover:underline">политикой обработки данных</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── МОДАЛ: ЗАПРОС ЦЕНЫ ─── */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setModalOpen(false)}>
+          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="font-display font-bold text-2xl text-foreground">Запросить КП</h3>
+                {modalProduct && <p className="text-sm text-primary mt-1">{modalProduct}</p>}
+              </div>
+              <button onClick={() => setModalOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-background hover:bg-primary/10 transition-colors">
+                <Icon name="X" size={20} className="text-muted-foreground" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <input type="text"  placeholder="Имя"       className={inputCls} />
+              <input type="text"  placeholder="Компания"  className={inputCls} />
+              <input type="tel"   placeholder="Телефон"   className={inputCls} />
+              <input type="email" placeholder="Почта"     className={inputCls} />
+              <textarea placeholder="Комментарий (объём, продукт, задача)" rows={3} className={inputCls + " resize-none"} />
+              <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
+                Отправить запрос
+              </button>
+              <p className="text-xs text-muted-foreground text-center">
+                Нажимая «Отправить», вы соглашаетесь с{" "}
+                <a href="#" className="text-primary hover:underline">политикой обработки данных</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── ФУТЕР ─── */}
+      <footer className="border-t border-border py-12 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-10">
+            <div className="md:col-span-1">
+              <p className="font-black text-lg text-primary mb-1">Daribo & Niro-Tech</p>
+              <p className="text-xs text-muted-foreground mb-4">Оборудование для посола и маринования мяса, птицы и рыбы</p>
+              <div className="space-y-2">
+                <a href="tel:+70000000000" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
+                  <Icon name="Phone" size={14} className="text-primary" />
+                  +7 (000) 000-00-00
+                </a>
+                <a href="mailto:info@niro-tech.ru" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
+                  <Icon name="Mail" size={14} className="text-primary" />
+                  info@niro-tech.ru
+                </a>
+              </div>
+            </div>
+            <div>
+              <p className="font-semibold text-sm text-foreground mb-3">Оборудование</p>
+              <div className="space-y-2">
+                {["#massager", "#gr", "#injector", "#perf", "#conveyor"].map((href, i) => (
+                  <a key={i} href={href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {["Вакуумные массажеры", "Серия GR", "Инъекторы рассола", "Производительность", "Конвейер и шаг"][i]}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="font-semibold text-sm text-foreground mb-3">Компания</p>
+              <div className="space-y-2">
+                {["#catalog", "#benefits", "#compare", "#service", "#about", "#faq"].map((href, i) => (
+                  <a key={i} href={href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                    {["Каталог", "Преимущества", "Сравнение", "Внедрение и сервис", "О компании", "FAQ"][i]}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="font-semibold text-sm text-foreground mb-3">Подбор</p>
+              <div className="space-y-2">
+                {[["#selector", "Подобрать оборудование"], ["#contacts", "Контакты"], ["#contacts", "Запросить КП"]].map(([href, label], i) => (
+                  <a key={i} href={href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">{label}</a>
+                ))}
+              </div>
+              <div className="mt-6">
+                <a href="#contacts" className="inline-block px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-full hover:bg-primary/90 transition-all shadow-sm">
+                  Рассчитать решение
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+            <p>© 2025 Daribo & Niro-Tech. Все права защищены.</p>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-primary transition-colors">Политика обработки данных</a>
+              <a href="#" className="hover:text-primary transition-colors">Согласие на обработку</a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
