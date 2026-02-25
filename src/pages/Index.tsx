@@ -1,5 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Icon from "@/components/ui/icon";
+
+const CATALOG_URL = "https://functions.poehali.dev/7093349e-12b4-4025-a465-82ce3b87b0b2";
+
+interface CatalogItem {
+  id: string;
+  name: string;
+  price: number | null;
+  price_display: string | null;
+  url: string | null;
+  description: string | null;
+  pictures: string[];
+  brand: string | null;
+  productivity: { name: string; value: string } | null;
+  extra_params: { name: string; value: string }[];
+  all_params: { name: string; value: string }[];
+  category_id: string;
+}
 
 const inputCls = "w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors";
 const btnPrimary = "px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20";
@@ -11,6 +28,19 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Catalog state
+  const [catalogTab, setCatalogTab] = useState<"massagers" | "injectors">("massagers");
+  const [catalogData, setCatalogData] = useState<{ massagers: CatalogItem[]; injectors: CatalogItem[] } | null>(null);
+  const [catalogLoading, setCatalogLoading] = useState(false);
+  const [catalogSearch, setCatalogSearch] = useState("");
+  const [selectedItem, setSelectedItem] = useState<CatalogItem | null>(null);
+  const [selectedSlide, setSelectedSlide] = useState(0);
+  const [cardSlides, setCardSlides] = useState<Record<string, number>>({});
+  const [inquiryItem, setInquiryItem] = useState<CatalogItem | null>(null);
+  const [inquiryName, setInquiryName] = useState("");
+  const [inquiryPhone, setInquiryPhone] = useState("");
+  const [inquirySent, setInquirySent] = useState(false);
 
   useEffect(() => {
     const ids = [
@@ -38,6 +68,26 @@ const Index = () => {
   }, []);
 
   const vis = (id: string) => visibleSections[id];
+
+  useEffect(() => {
+    setCatalogLoading(true);
+    fetch(CATALOG_URL)
+      .then((r) => r.json())
+      .then((d) => setCatalogData(d))
+      .finally(() => setCatalogLoading(false));
+  }, []);
+
+  const filteredItems = useCallback(() => {
+    if (!catalogData) return [];
+    const items = catalogData[catalogTab];
+    if (!catalogSearch.trim()) return items;
+    const q = catalogSearch.toLowerCase();
+    return items.filter(
+      (it) =>
+        it.name.toLowerCase().includes(q) ||
+        (it.brand || "").toLowerCase().includes(q)
+    );
+  }, [catalogData, catalogTab, catalogSearch]);
 
   const navLinks = [
     { href: "#solutions",  label: "Решения" },
@@ -686,129 +736,332 @@ const Index = () => {
       {/* ─── ЭКРАН 9: КАТАЛОГ ─── */}
       <section id="catalog" className="py-28 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
+          {/* Заголовок */}
           <div className={`text-center mb-12 transition-all duration-1000 ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">Оборудование</span>
             <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
               Каталог оборудования
             </h2>
-            <p className="text-lg text-muted-foreground mt-4 max-w-xl mx-auto">Выберите тип, сырьё или опции — подберём оптимальную конфигурацию</p>
+            <p className="text-lg text-muted-foreground mt-4 max-w-xl mx-auto">Реальный ассортимент с ценами — выберите модель и оставьте заявку</p>
           </div>
 
-          {/* Фильтры */}
-          <div className={`flex flex-wrap gap-3 mb-10 transition-all duration-700 ${vis("catalog") ? "opacity-100" : "opacity-0"}`}>
-            {[
-              { label: "Тип", options: ["Все", "Массажер", "Инъектор"] },
-              { label: "Сырьё", options: ["Все", "Мясо", "Птица", "Рыба"] },
-              { label: "Опции", options: ["Все", "PLC", "Вакуум", "Подпружиненные иглы"] },
-            ].map((group, i) => (
-              <div key={i} className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold text-muted-foreground">{group.label}:</span>
-                {group.options.map((opt, j) => (
-                  <button key={j} className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${j === 0 ? "bg-primary text-white border-primary" : "border-border text-muted-foreground hover:border-primary hover:text-primary bg-white"}`}>
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            ))}
+          {/* Табы + поиск */}
+          <div className={`flex flex-col sm:flex-row gap-4 mb-10 items-start sm:items-center transition-all duration-700 ${vis("catalog") ? "opacity-100" : "opacity-0"}`}>
+            <div className="flex gap-2 bg-white border border-border rounded-2xl p-1.5 shadow-sm">
+              {(["massagers", "injectors"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => { setCatalogTab(tab); setCatalogSearch(""); }}
+                  className={`px-6 py-2.5 rounded-xl font-semibold text-sm transition-all ${catalogTab === tab ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  {tab === "massagers" ? "Массажеры" : "Инъекторы"}
+                  {catalogData && (
+                    <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${catalogTab === tab ? "bg-white/20 text-white" : "bg-primary/10 text-primary"}`}>
+                      {catalogData[tab].length}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="relative flex-1 max-w-xs">
+              <Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Поиск по названию или бренду..."
+                value={catalogSearch}
+                onChange={(e) => setCatalogSearch(e.target.value)}
+                className="w-full pl-9 pr-4 py-2.5 bg-white border border-border rounded-xl text-sm focus:outline-none focus:border-primary transition-colors"
+              />
+            </div>
           </div>
+
+          {/* Состояние загрузки */}
+          {catalogLoading && (
+            <div className="flex items-center justify-center py-24">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+                <p className="text-muted-foreground text-sm">Загружаем каталог...</p>
+              </div>
+            </div>
+          )}
 
           {/* Карточки */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-            {[
-              {
-                name: "Вакуумный массажер GR-200",
-                type: "Массажер",
-                icon: "RefreshCw",
-                specs: ["Объём: 200 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Продукты: мясо, птица, рыба"],
-                badges: ["PLC", "Вакуум"],
-              },
-              {
-                name: "Вакуумный массажер GR-500",
-                type: "Массажер",
-                icon: "RefreshCw",
-                specs: ["Объём: 500 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Продукты: мясо, птица"],
-                badges: ["PLC", "Вакуум", "99 программ"],
-              },
-              {
-                name: "Вакуумный массажер GR-1000",
-                type: "Массажер",
-                icon: "RefreshCw",
-                specs: ["Объём: 1000 л", "Вакуум: −0.1 МПа", "Материал: SUS304", "Большие партии"],
-                badges: ["PLC", "Вакуум"],
-              },
-              {
-                name: "Инъектор рассола NI-84",
-                type: "Инъектор",
-                icon: "Pipette",
-                specs: ["84 иглы", "До 4 т/ч", "До 4,3 бар", "Регистр давления"],
-                badges: ["84 иглы", "Быстросъём"],
-              },
-              {
-                name: "Инъектор NI-84P (птица)",
-                type: "Инъектор",
-                icon: "Pipette",
-                specs: ["84 иглы подпружиненные", "Тушки птицы + кость", "До 3,5 т/ч", "Регистр давления"],
-                badges: ["Подпружиненные", "Птица"],
-              },
-              {
-                name: "Инъектор NI-56",
-                type: "Инъектор",
-                icon: "Pipette",
-                specs: ["56 игл", "До 2 т/ч", "До 4 бар", "Малые объёмы"],
-                badges: ["Компакт"],
-              },
-            ].map((card, i) => (
-              <div key={i} className={`bg-white border border-border rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all flex flex-col ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${i * 80}ms`, transitionDuration: "700ms" }}>
-                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                  <Icon name={card.icon} fallback="Star" size={32} className="text-primary" />
+          {!catalogLoading && catalogData && (
+            <>
+              {filteredItems().length === 0 ? (
+                <div className="text-center py-20 text-muted-foreground">
+                  <Icon name="SearchX" size={48} className="mx-auto mb-4 opacity-30" />
+                  <p className="text-lg">Ничего не найдено по запросу «{catalogSearch}»</p>
                 </div>
-                <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">{card.type}</span>
-                <h3 className="font-bold text-xl text-foreground mb-4">{card.name}</h3>
-                <ul className="space-y-1.5 mb-4 flex-1">
-                  {card.specs.map((s, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Icon name="ChevronRight" size={14} className="text-primary flex-shrink-0" />
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {card.badges.map((b, j) => (
-                    <span key={j} className="text-xs font-medium px-3 py-1 bg-primary/8 text-primary border border-primary/20 rounded-full">{b}</span>
-                  ))}
-                </div>
-                <button
-                  onClick={() => { setModalProduct(card.name); setModalOpen(true); }}
-                  className="w-full py-3 bg-primary text-white rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all"
-                >
-                  Запросить цену / КП
-                </button>
-              </div>
-            ))}
-          </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+                  {filteredItems().map((item, i) => {
+                    const slide = cardSlides[item.id] || 0;
+                    return (
+                      <div
+                        key={item.id}
+                        className={`bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all flex flex-col group ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                        style={{ transitionDelay: `${i * 60}ms`, transitionDuration: "700ms" }}
+                      >
+                        {/* Фото + слайдер */}
+                        <div className="relative bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                          <img
+                            src={item.pictures[slide]}
+                            alt={item.name}
+                            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                            onClick={() => { setSelectedItem(item); setSelectedSlide(slide); }}
+                            style={{ cursor: "pointer" }}
+                          />
+                          {item.pictures.length > 1 && (
+                            <>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setCardSlides((prev) => ({ ...prev, [item.id]: (slide - 1 + item.pictures.length) % item.pictures.length })); }}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <Icon name="ChevronLeft" size={16} className="text-foreground" />
+                              </button>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setCardSlides((prev) => ({ ...prev, [item.id]: (slide + 1) % item.pictures.length })); }}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <Icon name="ChevronRight" size={16} className="text-foreground" />
+                              </button>
+                              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                                {item.pictures.map((_, pi) => (
+                                  <button
+                                    key={pi}
+                                    onClick={(e) => { e.stopPropagation(); setCardSlides((prev) => ({ ...prev, [item.id]: pi })); }}
+                                    className={`w-1.5 h-1.5 rounded-full transition-all ${pi === slide ? "bg-primary w-4" : "bg-white/70"}`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          )}
+                          {item.price_display && (
+                            <div className="absolute top-3 right-3 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-md">
+                              {item.price_display}
+                            </div>
+                          )}
+                        </div>
 
-          {/* Форма под каталогом */}
-          <div className={`p-10 bg-white border-2 border-primary/15 rounded-3xl shadow-sm transition-all duration-1000 ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <h3 className="text-3xl font-display font-black text-foreground mb-3">Не нашли нужную модель?</h3>
-                <p className="text-lg text-muted-foreground">Опишите задачу — подберём конфигурацию под ваш объём и продукт.</p>
-              </div>
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <input type="text"  placeholder="Компания" className={inputCls} />
-                  <input type="tel"   placeholder="Телефон"  className={inputCls} />
+                        {/* Контент */}
+                        <div className="p-5 flex flex-col flex-1">
+                          {item.brand && (
+                            <span className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{item.brand}</span>
+                          )}
+                          <h3
+                            className="font-bold text-lg text-foreground mb-3 leading-snug cursor-pointer hover:text-primary transition-colors"
+                            onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
+                          >
+                            {item.name}
+                          </h3>
+
+                          {/* Ключевые параметры */}
+                          <div className="space-y-1.5 mb-4 flex-1">
+                            {item.productivity && (
+                              <div className="flex items-start gap-2 text-sm">
+                                <Icon name="Zap" size={14} className="text-primary flex-shrink-0 mt-0.5" />
+                                <span className="text-muted-foreground"><span className="font-medium text-foreground">{item.productivity.name}:</span> {item.productivity.value}</span>
+                              </div>
+                            )}
+                            {item.extra_params.map((p, pi) => (
+                              <div key={pi} className="flex items-start gap-2 text-sm">
+                                <Icon name="ChevronRight" size={14} className="text-primary flex-shrink-0 mt-0.5" />
+                                <span className="text-muted-foreground"><span className="font-medium text-foreground">{p.name}:</span> {p.value}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="flex gap-2 mt-2">
+                            <button
+                              onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
+                              className="flex-1 py-2.5 border border-primary/30 text-primary rounded-xl text-sm font-semibold hover:border-primary hover:bg-primary/5 transition-all"
+                            >
+                              Подробнее
+                            </button>
+                            <button
+                              onClick={() => { setInquiryItem(item); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
+                              className="flex-1 py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary/90 transition-all shadow-sm"
+                            >
+                              Узнать подробней
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <input type="email"   placeholder="Почта"    className={inputCls} />
-                <textarea placeholder="Комментарий (продукт, объём, задача)" rows={2} className={inputCls + " resize-none"} />
-                <button className="w-full py-3.5 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-sm">
-                  Запросить подбор
-                </button>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* Модал: детальная карточка товара */}
+      {selectedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Закрыть */}
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 hover:bg-white border border-border rounded-full flex items-center justify-center shadow-sm transition-all"
+            >
+              <Icon name="X" size={18} className="text-foreground" />
+            </button>
+
+            <div className="grid lg:grid-cols-2 gap-0">
+              {/* Слайдер фото */}
+              <div className="bg-gray-50 rounded-tl-3xl rounded-bl-3xl p-6 flex flex-col gap-4">
+                <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm" style={{ aspectRatio: "4/3" }}>
+                  <img
+                    src={selectedItem.pictures[selectedSlide]}
+                    alt={selectedItem.name}
+                    className="w-full h-full object-contain p-4"
+                  />
+                  {selectedItem.pictures.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setSelectedSlide((s) => (s - 1 + selectedItem.pictures.length) % selectedItem.pictures.length)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
+                      >
+                        <Icon name="ChevronLeft" size={18} />
+                      </button>
+                      <button
+                        onClick={() => setSelectedSlide((s) => (s + 1) % selectedItem.pictures.length)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
+                      >
+                        <Icon name="ChevronRight" size={18} />
+                      </button>
+                    </>
+                  )}
+                </div>
+                {selectedItem.pictures.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {selectedItem.pictures.map((pic, pi) => (
+                      <button
+                        key={pi}
+                        onClick={() => setSelectedSlide(pi)}
+                        className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${pi === selectedSlide ? "border-primary shadow-md" : "border-transparent opacity-60 hover:opacity-100"}`}
+                      >
+                        <img src={pic} alt="" className="w-full h-full object-contain bg-white p-1" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Информация */}
+              <div className="p-8 flex flex-col">
+                {selectedItem.brand && (
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest mb-2">{selectedItem.brand}</span>
+                )}
+                <h2 className="text-2xl font-display font-black text-foreground mb-2 leading-tight">{selectedItem.name}</h2>
+                {selectedItem.price_display && (
+                  <p className="text-3xl font-black text-primary mb-4">{selectedItem.price_display}</p>
+                )}
+
+                {/* Все характеристики */}
+                <div className="space-y-2 mb-6 max-h-48 overflow-y-auto pr-1">
+                  {selectedItem.all_params.map((p, pi) => (
+                    <div key={pi} className="flex justify-between gap-4 py-1.5 border-b border-border/50 text-sm">
+                      <span className="text-muted-foreground flex-shrink-0">{p.name}</span>
+                      <span className="font-medium text-foreground text-right">{p.value}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Описание */}
+                {selectedItem.description && (
+                  <div
+                    className="text-sm text-muted-foreground leading-relaxed mb-6 max-h-28 overflow-y-auto pr-1 border-t border-border/50 pt-4"
+                    dangerouslySetInnerHTML={{ __html: selectedItem.description }}
+                  />
+                )}
+
+                <div className="mt-auto space-y-2">
+                  <button
+                    onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
+                    className="w-full py-3.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-md"
+                  >
+                    Узнать подробней
+                  </button>
+                  {selectedItem.url && (
+                    <a
+                      href={selectedItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 border border-border rounded-xl text-sm text-muted-foreground hover:border-primary hover:text-primary transition-all text-center block"
+                    >
+                      На сайте поставщика →
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
+
+      {/* Модал: заявка на товар */}
+      {inquiryItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setInquiryItem(null)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setInquiryItem(null)}
+              className="absolute top-4 right-4 w-9 h-9 bg-border/40 hover:bg-border rounded-full flex items-center justify-center"
+            >
+              <Icon name="X" size={16} />
+            </button>
+            {!inquirySent ? (
+              <>
+                <h3 className="text-2xl font-display font-black text-foreground mb-1">Узнать подробней</h3>
+                <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                  <span className="font-medium text-foreground">{inquiryItem.name}</span>
+                </p>
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    placeholder="Ваше имя"
+                    value={inquiryName}
+                    onChange={(e) => setInquiryName(e.target.value)}
+                    className={inputCls}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Телефон"
+                    value={inquiryPhone}
+                    onChange={(e) => setInquiryPhone(e.target.value)}
+                    className={inputCls}
+                  />
+                  <button
+                    onClick={() => setInquirySent(true)}
+                    disabled={!inquiryName.trim() || !inquiryPhone.trim()}
+                    className="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-md disabled:opacity-40"
+                  >
+                    Отправить
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-6">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Check" size={32} className="text-green-600" />
+                </div>
+                <h3 className="text-2xl font-display font-black text-foreground mb-2">Заявка отправлена!</h3>
+                <p className="text-muted-foreground">Свяжемся с вами в течение рабочего дня</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ─── ЭКРАН 10: ПРЕИМУЩЕСТВА 6 ПЛИТОК ─── */}
       <section id="benefits" className="py-28 px-6 bg-white">
