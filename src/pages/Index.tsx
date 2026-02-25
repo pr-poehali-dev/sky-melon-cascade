@@ -32,7 +32,7 @@ const Index = () => {
   // Catalog state
   const [catalogTab, setCatalogTab] = useState<"massagers" | "injectors">("massagers");
   const [catalogData, setCatalogData] = useState<{ massagers: CatalogItem[]; injectors: CatalogItem[] } | null>(null);
-  const [catalogLoading, setCatalogLoading] = useState(false);
+  const [catalogLoading, setCatalogLoading] = useState(true);
   const [catalogSearch, setCatalogSearch] = useState("");
   const [selectedItem, setSelectedItem] = useState<CatalogItem | null>(null);
   const [selectedSlide, setSelectedSlide] = useState(0);
@@ -385,7 +385,7 @@ const Index = () => {
       <section id="catalog" className="py-28 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           {/* Заголовок */}
-          <div className={`text-center mb-12 transition-all duration-1000 ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className="text-center mb-12">
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">Оборудование</span>
             <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
               Каталог оборудования
@@ -394,7 +394,7 @@ const Index = () => {
           </div>
 
           {/* Табы + поиск */}
-          <div className={`flex flex-col sm:flex-row gap-4 mb-10 items-start sm:items-center transition-all duration-700 ${vis("catalog") ? "opacity-100" : "opacity-0"}`}>
+          <div className="flex flex-col sm:flex-row gap-4 mb-10 items-start sm:items-center">
             <div className="flex gap-2 bg-white border border-border rounded-2xl p-1.5 shadow-sm">
               {(["massagers", "injectors"] as const).map((tab) => (
                 <button
@@ -448,8 +448,7 @@ const Index = () => {
                     return (
                       <div
                         key={item.id}
-                        className={`bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all flex flex-col group ${vis("catalog") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                        style={{ transitionDelay: `${i * 60}ms`, transitionDuration: "700ms" }}
+                        className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all flex flex-col group"
                       >
                         {/* Фото + слайдер */}
                         <div className="relative bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
