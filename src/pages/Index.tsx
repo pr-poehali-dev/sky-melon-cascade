@@ -552,10 +552,10 @@ const Index = () => {
               Преимущества массажёров от Техно-Сиб
             </h2>
           </div>
-          <div className="flex flex-col lg:flex-row gap-10 items-center">
+          <div className="flex flex-col lg:flex-row gap-10 items-stretch">
 
             {/* Левая колонка — список преимуществ */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-3">
+            <div className="w-full lg:w-1/2 flex flex-col gap-3 justify-between">
               {[
                 { icon: "Zap",               title: "Производительность до 4 т/ч",     desc: "Рабочее давление до 4,3 бар" },
                 { icon: "Gauge",             title: "Вакуумный барабан до −0,1 МПа",   desc: "Интенсивное массирование без потерь качества" },
@@ -579,17 +579,21 @@ const Index = () => {
             </div>
 
             {/* Правая колонка — два фото одно под другим */}
-            <div className="w-full lg:w-1/2 self-stretch flex flex-col gap-4">
-              <img
-                src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
-                alt="Вакуумный массажер DRB-GRY750"
-                className="w-full flex-1 object-contain object-center"
-              />
-              <img
-                src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
-                alt="Вакуумный массажер GRZK-100"
-                className="w-full flex-1 object-contain object-center"
-              />
+            <div className="w-full lg:w-1/2 flex flex-col gap-4">
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
+                  alt="Вакуумный массажер DRB-GRY750"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
+                  alt="Вакуумный массажер GRZK-100"
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
 
           </div>
