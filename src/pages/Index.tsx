@@ -55,10 +55,11 @@ const Index = () => {
       <header className="fixed top-0 w-full bg-white/90 backdrop-blur-xl border-b border-border z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
-            <span className="font-display font-black text-xl tracking-tight text-primary leading-tight">
-              Daribo & Niro-Tech
-            </span>
-            <p className="text-xs text-muted-foreground hidden sm:block">Оборудование для посола и маринования</p>
+            <img
+              src="https://cdn.poehali.dev/files/d5c29248-ffec-415b-ad06-5cbe84aeab79.jpg"
+              alt="Техносиб"
+              className="h-10 w-auto object-contain"
+            />
           </div>
           <nav className="hidden lg:flex gap-7 text-sm font-medium">
             {navLinks.map((l) => (
