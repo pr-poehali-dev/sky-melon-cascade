@@ -566,13 +566,13 @@ const Index = () => {
                 { icon: "SlidersHorizontal", title: "Регулируемые параметры",           desc: "Скорость, время, вакуум и направление вращения" },
                 { icon: "ListChecks",        title: "99 программ работы",               desc: "Удобная загрузка и выгрузка сырья" },
               ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
-                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
+                <div key={i} className="flex items-center gap-4 bg-white rounded-xl border border-border px-5 py-4 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
+                  <div className="w-14 h-14 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={30} className="text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
+                    <p className="font-bold text-2xl text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-lg text-muted-foreground mt-0.5">{feat.desc}</p>
                   </div>
                 </div>
               ))}
@@ -640,13 +640,13 @@ const Index = () => {
                 { icon: "Repeat",            title: "Повторяемость",                    desc: "Одинаковый шаг на каждой партии" },
                 { icon: "Droplets",          title: "Мойка без разбора корпуса",        desc: "Быстрая санитарная обработка без простоев" },
               ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-3 bg-background border border-border rounded-xl px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
-                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
+                <div key={i} className="flex items-center gap-4 bg-background border border-border rounded-xl px-5 py-4 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
+                  <div className="w-14 h-14 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={30} className="text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
+                    <p className="font-bold text-2xl text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-lg text-muted-foreground mt-0.5">{feat.desc}</p>
                   </div>
                 </div>
               ))}
