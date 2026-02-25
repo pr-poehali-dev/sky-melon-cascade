@@ -578,44 +578,20 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Правая колонка — фото первого массажёра */}
-            <div className="w-full lg:w-1/2">
-              {catalogData?.massagers?.[0] ? (
-                <div
-                  className="bg-white border border-border rounded-3xl overflow-hidden shadow-xl cursor-pointer group"
-                  onClick={() => { setSelectedItem(catalogData.massagers[0]); setSelectedSlide(0); }}
-                >
-                  <div className="bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
-                    {catalogData.massagers[0].pictures[0] ? (
-                      <img
-                        src={catalogData.massagers[0].pictures[0]}
-                        alt={catalogData.massagers[0].name}
-                        className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Icon name="Package" size={64} className="text-muted-foreground/20" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="px-6 py-5">
-                    {catalogData.massagers[0].brand && (
-                      <span className="text-xs font-bold text-primary uppercase tracking-widest">{catalogData.massagers[0].brand}</span>
-                    )}
-                    <p className="font-bold text-xl text-foreground mt-1 leading-snug">{catalogData.massagers[0].name}</p>
-                    {catalogData.massagers[0].price_display && (
-                      <p className="text-2xl font-black text-primary mt-2">{catalogData.massagers[0].price_display}</p>
-                    )}
-                    <p className="text-sm text-primary font-semibold mt-3 flex items-center gap-1">
-                      Подробнее <Icon name="ArrowRight" size={14} />
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="h-64 flex items-center justify-center">
-                  <Icon name="Loader2" size={32} className="animate-spin text-primary" />
-                </div>
-              )}
+            {/* Правая колонка — фото товара DRB-GRY750 */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center">
+              {(() => {
+                const featured = catalogData?.massagers?.find(m => m.name.includes("DRB-GRY750")) ?? catalogData?.massagers?.[0];
+                if (!catalogData) return <Icon name="Loader2" size={32} className="animate-spin text-primary" />;
+                if (!featured?.pictures?.[0]) return null;
+                return (
+                  <img
+                    src={featured.pictures[0]}
+                    alt={featured.name}
+                    className="w-full max-w-lg object-contain drop-shadow-2xl"
+                  />
+                );
+              })()}
             </div>
 
           </div>
