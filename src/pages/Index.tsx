@@ -566,13 +566,13 @@ const Index = () => {
                 { icon: "SlidersHorizontal", title: "Регулируемые параметры",           desc: "Скорость, время, вакуум и направление вращения" },
                 { icon: "ListChecks",        title: "99 программ работы",               desc: "Удобная загрузка и выгрузка сырья" },
               ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-2.5 hover:border-primary/40 hover:shadow-sm transition-all">
-                  <div className="w-9 h-9 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={18} className="text-primary" />
+                <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
+                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-xs text-muted-foreground">{feat.desc}</p>
+                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
                   </div>
                 </div>
               ))}
@@ -580,18 +580,20 @@ const Index = () => {
 
             {/* Правая колонка — два фото одно под другим */}
             <div className="w-full lg:w-1/2 flex flex-col gap-2">
-              <img
-                src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
-                alt="Вакуумный массажер DRB-GRY750"
-                className="w-full flex-1 object-contain"
-                style={{ maxHeight: "50%" }}
-              />
-              <img
-                src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
-                alt="Вакуумный массажер GRZK-100"
-                className="w-full flex-1 object-contain"
-                style={{ maxHeight: "50%" }}
-              />
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
+                  alt="Вакуумный массажер DRB-GRY750"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
+                  alt="Вакуумный массажер GRZK-100"
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
 
           </div>
@@ -610,18 +612,20 @@ const Index = () => {
 
             {/* Левая колонка — два фото одно под другим */}
             <div className="w-full lg:w-1/2 flex flex-col gap-2">
-              <img
-                src="https://cdn.poehali.dev/files/981dfd9e-538a-4ac3-9b66-b7a72c3aec06.jpg"
-                alt="Инъектор для мяса ZS-40"
-                className="w-full flex-1 object-contain"
-                style={{ maxHeight: "50%" }}
-              />
-              <img
-                src="https://cdn.poehali.dev/files/e29337aa-3873-4c2b-80ae-2ab8d128de09.png"
-                alt="Инъектор GRZK-100"
-                className="w-full flex-1 object-contain"
-                style={{ maxHeight: "50%" }}
-              />
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/981dfd9e-538a-4ac3-9b66-b7a72c3aec06.jpg"
+                  alt="Инъектор для мяса ZS-40"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/e29337aa-3873-4c2b-80ae-2ab8d128de09.png"
+                  alt="Инъектор GRZK-100"
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
 
             {/* Правая колонка — список преимуществ */}
@@ -636,13 +640,13 @@ const Index = () => {
                 { icon: "Repeat",            title: "Повторяемость",                    desc: "Одинаковый шаг на каждой партии" },
                 { icon: "Droplets",          title: "Мойка без разбора корпуса",        desc: "Быстрая санитарная обработка без простоев" },
               ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-3 bg-background border border-border rounded-xl px-4 py-2.5 hover:border-primary/40 hover:shadow-sm transition-all">
-                  <div className="w-9 h-9 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={18} className="text-primary" />
+                <div key={i} className="flex items-center gap-3 bg-background border border-border rounded-xl px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
+                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-xs text-muted-foreground">{feat.desc}</p>
+                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
                   </div>
                 </div>
               ))}
