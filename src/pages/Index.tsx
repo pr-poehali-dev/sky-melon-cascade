@@ -578,12 +578,17 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Правая колонка — фото массажёра */}
-            <div className="w-full lg:w-1/2 self-stretch flex items-stretch">
+            {/* Правая колонка — два фото одно под другим */}
+            <div className="w-full lg:w-1/2 self-stretch flex flex-col gap-4">
               <img
                 src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
                 alt="Вакуумный массажер DRB-GRY750"
-                className="w-full h-full object-contain object-center"
+                className="w-full flex-1 object-contain object-center"
+              />
+              <img
+                src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
+                alt="Вакуумный массажер GRZK-100"
+                className="w-full flex-1 object-contain object-center"
               />
             </div>
 
