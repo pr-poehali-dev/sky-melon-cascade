@@ -56,10 +56,11 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
             <img
-              src="https://cdn.poehali.dev/files/d5c29248-ffec-415b-ad06-5cbe84aeab79.jpg"
+              src="https://cdn.poehali.dev/files/b643e2cd-1c2b-461b-b32b-4053b1b9e72b.jpg"
               alt="Техносиб"
-              className="h-10 w-auto object-contain"
+              className="h-9 w-auto object-contain"
             />
+            <p className="text-xs text-muted-foreground hidden sm:block mt-0.5">Оборудование для маринования и посола мяса</p>
           </div>
           <nav className="hidden lg:flex gap-7 text-sm font-medium">
             {navLinks.map((l) => (
@@ -1227,8 +1228,12 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-10">
             <div className="md:col-span-1">
-              <p className="font-black text-lg text-primary mb-1">Daribo & Niro-Tech</p>
-              <p className="text-xs text-muted-foreground mb-4">Оборудование для посола и маринования мяса, птицы и рыбы</p>
+              <img
+                src="https://cdn.poehali.dev/files/b643e2cd-1c2b-461b-b32b-4053b1b9e72b.jpg"
+                alt="Техносиб"
+                className="h-8 w-auto object-contain mb-2"
+              />
+              <p className="text-xs text-muted-foreground mb-4">Оборудование для маринования и посола мяса</p>
               <div className="space-y-2">
                 <a href="tel:+70000000000" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
                   <Icon name="Phone" size={14} className="text-primary" />
