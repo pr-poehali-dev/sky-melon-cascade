@@ -544,6 +544,43 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ─── ПРЕИМУЩЕСТВА МАССАЖЁРОВ ─── */}
+      <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-white to-primary/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-xs font-bold tracking-widest text-primary uppercase">Техно-Сиб</span>
+            <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight mt-3 text-foreground">
+              Преимущества массажёров от Техно-Сиб
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: "Zap",          title: "Высокая производительность", desc: "До 4 т/ч при рабочем давлении до 4,3 бар" },
+              { icon: "Gauge",        title: "Глубокий вакуум",            desc: "Вакуумный барабан до −0,1 МПа для интенсивного массирования" },
+              { icon: "Database",     title: "Широкий модельный ряд",      desc: "Объём барабана 100–3000 л под любой объём производства" },
+              { icon: "ShieldCheck",  title: "Пищевая нержавейка",         desc: "Корпус из нержавеющей стали, соответствие санитарным нормам" },
+              { icon: "Droplets",     title: "Быстрая мойка",              desc: "Форма барабана оптимизирована для лёгкой очистки без простоев" },
+              { icon: "Crosshair",    title: "Точный посол",               desc: "Регистр давления индивидуально на каждую иглу" },
+              { icon: "SlidersHorizontal", title: "Гибкая настройка",     desc: "Регулировка скорости, времени, вакуума и направления вращения" },
+              { icon: "ListChecks",   title: "99 программ работы",         desc: "Удобная загрузка и выгрузка сырья, сохранение режимов в памяти" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="bg-white border border-border rounded-2xl p-6 flex flex-col gap-4 hover:border-primary/50 hover:shadow-lg transition-all group"
+              >
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Icon name={item.icon} fallback="Star" size={24} className="text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-foreground mb-1 leading-snug">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Модал: детальная карточка товара */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
