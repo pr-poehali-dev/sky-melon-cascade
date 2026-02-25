@@ -600,6 +600,62 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ─── ПРЕИМУЩЕСТВА ИНЪЕКТОРОВ ─── */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight text-foreground">
+              Преимущества инъекторов от Техно-Сиб
+            </h2>
+          </div>
+          <div className="flex flex-col lg:flex-row gap-10 items-stretch">
+
+            {/* Левая колонка — два фото одно под другим */}
+            <div className="w-full lg:w-1/2 flex flex-col gap-4">
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/981dfd9e-538a-4ac3-9b66-b7a72c3aec06.jpg"
+                  alt="Инъектор для мяса ZS-40"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex-1 flex items-center justify-center">
+                <img
+                  src="https://cdn.poehali.dev/files/e29337aa-3873-4c2b-80ae-2ab8d128de09.png"
+                  alt="Инъектор GRZK-100"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Правая колонка — список преимуществ */}
+            <div className="w-full lg:w-1/2 flex flex-col gap-3 justify-between">
+              {[
+                { icon: "Grid3x3",           title: "84 иглы",                          desc: "Максимальное покрытие продукта" },
+                { icon: "Gauge",             title: "Давление до 4,3 бар",              desc: "Работа с вязкими маринадами без потери качества" },
+                { icon: "Zap",               title: "Подпружиненные иглы",              desc: "Не ломаются при контакте с костью, равномерно покрывают продукт" },
+                { icon: "ListChecks",        title: "До 99 программ работы",            desc: "Время, интервалы, вакуум, скорость — всё сохраняется" },
+                { icon: "MoveHorizontal",    title: "Зубчатый конвейер",                desc: "Боковые направляющие — продукт не сдвигается" },
+                { icon: "Ruler",             title: "Шаг 15–60 мм",                     desc: "Точная настройка под любой продукт" },
+                { icon: "Repeat",            title: "Повторяемость",                    desc: "Одинаковый шаг на каждой партии" },
+                { icon: "Droplets",          title: "Мойка без разбора корпуса",        desc: "Быстрая санитарная обработка без простоев" },
+              ].map((feat, i) => (
+                <div key={i} className="flex items-start gap-4 bg-background border border-border rounded-2xl px-5 py-4 hover:border-primary/40 hover:shadow-md transition-all">
+                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Модал: детальная карточка товара */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
