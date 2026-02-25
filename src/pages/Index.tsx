@@ -484,7 +484,7 @@ const Index = () => {
                               </div>
                             </>
                           )}
-                          {item.brand && (
+                          {item.brand && item.brand.toLowerCase() !== "hualian" && (
                             <div className="absolute top-3 left-3 bg-white/95 text-primary text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-primary/20 uppercase tracking-wide">
                               {item.brand}
                             </div>
@@ -494,7 +494,7 @@ const Index = () => {
                         {/* Контент */}
                         <div className="p-5 flex flex-col flex-1">
                           <h3
-                            className="font-bold text-lg text-foreground mb-2 leading-snug cursor-pointer hover:text-primary transition-colors"
+                            className="font-bold text-2xl text-foreground mb-2 leading-snug cursor-pointer hover:text-primary transition-colors"
                             onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
                           >
                             {item.name}
@@ -506,14 +506,14 @@ const Index = () => {
                           {/* Ключевые параметры */}
                           <div className="space-y-1.5 mb-4 flex-1">
                             {item.productivity && (
-                              <div className="flex items-start gap-2 text-sm">
-                                <Icon name="Zap" size={14} className="text-primary flex-shrink-0 mt-0.5" />
+                              <div className="flex items-start gap-2 text-base">
+                                <Icon name="Zap" size={16} className="text-primary flex-shrink-0 mt-0.5" />
                                 <span className="text-muted-foreground"><span className="font-medium text-foreground">{item.productivity.name}:</span> {item.productivity.value}</span>
                               </div>
                             )}
                             {item.extra_params.map((p, pi) => (
-                              <div key={pi} className="flex items-start gap-2 text-sm">
-                                <Icon name="ChevronRight" size={14} className="text-primary flex-shrink-0 mt-0.5" />
+                              <div key={pi} className="flex items-start gap-2 text-base">
+                                <Icon name="ChevronRight" size={16} className="text-primary flex-shrink-0 mt-0.5" />
                                 <span className="text-muted-foreground"><span className="font-medium text-foreground">{p.name}:</span> {p.value}</span>
                               </div>
                             ))}
@@ -544,112 +544,74 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ─── ПРЕИМУЩЕСТВА МАССАЖЁРОВ ─── */}
+      {/* ─── ПРЕИМУЩЕСТВА НАШЕГО ОБОРУДОВАНИЯ ─── */}
       <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-white to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight text-foreground">
-              Преимущества массажёров от Техно-Сиб
+              Преимущества нашего оборудования
             </h2>
           </div>
-          <div className="flex flex-col lg:flex-row gap-10 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-            {/* Левая колонка — список преимуществ */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-1.5">
-              {[
-                { icon: "Zap",               title: "Производительность до 4 т/ч",     desc: "Рабочее давление до 4,3 бар" },
-                { icon: "Gauge",             title: "Вакуумный барабан до −0,1 МПа",   desc: "Интенсивное массирование без потерь качества" },
-                { icon: "Database",          title: "Объём барабана 100–3000 л",        desc: "Широкий модельный ряд под любой объём производства" },
-                { icon: "ShieldCheck",       title: "Пищевая нержавеющая сталь",        desc: "Соответствие санитарным нормам" },
-                { icon: "Droplets",          title: "Быстрая мойка",                    desc: "Форма барабана оптимизирована под скоростную очистку" },
-                { icon: "Crosshair",         title: "Регистр давления на все иглы",     desc: "Точный и равномерный посол каждого куска" },
-                { icon: "SlidersHorizontal", title: "Регулируемые параметры",           desc: "Скорость, время, вакуум и направление вращения" },
-                { icon: "ListChecks",        title: "99 программ работы",               desc: "Удобная загрузка и выгрузка сырья" },
-              ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-4 bg-white rounded-xl border border-border px-5 py-4 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
-                  <div className="w-14 h-14 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={30} className="text-primary" />
+            {/* Колонка: Массажеры */}
+            <div>
+              <h3 className="text-2xl font-black text-foreground mb-4 pb-3 border-b-2 border-primary/30 flex items-center gap-2">
+                <Icon name="RefreshCw" size={24} className="text-primary" />
+                Массажеры
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                {[
+                  { icon: "Zap",               title: "Производительность до 4 т/ч",   desc: "Рабочее давление до 4,3 бар" },
+                  { icon: "Gauge",             title: "Вакуумный барабан до −0,1 МПа", desc: "Интенсивное массирование без потерь качества" },
+                  { icon: "Database",          title: "Объём барабана 100–3000 л",      desc: "Широкий модельный ряд под любой объём производства" },
+                  { icon: "ShieldCheck",       title: "Пищевая нержавеющая сталь",      desc: "Соответствие санитарным нормам" },
+                  { icon: "Droplets",          title: "Быстрая мойка",                  desc: "Форма барабана оптимизирована под скоростную очистку" },
+                  { icon: "SlidersHorizontal", title: "Регулируемые параметры",         desc: "Скорость, время, вакуум и направление вращения" },
+                  { icon: "ListChecks",        title: "99 программ работы",             desc: "Сохранение режимов массирования" },
+                  { icon: "Package",           title: "Рёбра целостности",              desc: "Рёбра сохраняют целостность кусков при массировании" },
+                ].map((feat, i) => (
+                  <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all">
+                    <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <Icon name={feat.icon} fallback="Star" size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-xl text-foreground leading-snug">{feat.title}</p>
+                      <p className="text-base text-muted-foreground">{feat.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-2xl text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-lg text-muted-foreground mt-0.5">{feat.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Правая колонка — два фото одно под другим */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-2">
-              <div className="flex-1 flex items-center justify-center">
-                <img
-                  src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
-                  alt="Вакуумный массажер DRB-GRY750"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="flex-1 flex items-center justify-center">
-                <img
-                  src="https://cdn.poehali.dev/files/34a98faf-2788-47ff-a4ca-b30aa4e0b733.png"
-                  alt="Вакуумный массажер GRZK-100"
-                  className="w-full h-full object-contain"
-                />
+                ))}
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ─── ПРЕИМУЩЕСТВА ИНЪЕКТОРОВ ─── */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight text-foreground">
-              Преимущества инъекторов от Техно-Сиб
-            </h2>
-          </div>
-          <div className="flex flex-col lg:flex-row gap-10 items-stretch">
-
-            {/* Левая колонка — два фото одно под другим */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-2">
-              <div className="flex-1 flex items-center justify-center">
-                <img
-                  src="https://cdn.poehali.dev/files/981dfd9e-538a-4ac3-9b66-b7a72c3aec06.jpg"
-                  alt="Инъектор для мяса ZS-40"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="flex-1 flex items-center justify-center">
-                <img
-                  src="https://cdn.poehali.dev/files/e29337aa-3873-4c2b-80ae-2ab8d128de09.png"
-                  alt="Инъектор GRZK-100"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Правая колонка — список преимуществ */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-1.5">
-              {[
-                { icon: "Grid3x3",           title: "84 иглы",                          desc: "Максимальное покрытие продукта" },
-                { icon: "Gauge",             title: "Давление до 4,3 бар",              desc: "Работа с вязкими маринадами без потери качества" },
-                { icon: "Zap",               title: "Подпружиненные иглы",              desc: "Не ломаются при контакте с костью, равномерно покрывают продукт" },
-                { icon: "ListChecks",        title: "До 99 программ работы",            desc: "Время, интервалы, вакуум, скорость — всё сохраняется" },
-                { icon: "MoveHorizontal",    title: "Зубчатый конвейер",                desc: "Боковые направляющие — продукт не сдвигается" },
-                { icon: "Ruler",             title: "Шаг 15–60 мм",                     desc: "Точная настройка под любой продукт" },
-                { icon: "Repeat",            title: "Повторяемость",                    desc: "Одинаковый шаг на каждой партии" },
-                { icon: "Droplets",          title: "Мойка без разбора корпуса",        desc: "Быстрая санитарная обработка без простоев" },
-              ].map((feat, i) => (
-                <div key={i} className="flex items-center gap-4 bg-background border border-border rounded-xl px-5 py-4 hover:border-primary/40 hover:shadow-sm transition-all flex-1">
-                  <div className="w-14 h-14 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon name={feat.icon} fallback="Star" size={30} className="text-primary" />
+            {/* Колонка: Инъекторы */}
+            <div>
+              <h3 className="text-2xl font-black text-foreground mb-4 pb-3 border-b-2 border-primary/30 flex items-center gap-2">
+                <Icon name="Pipette" size={24} className="text-primary" />
+                Инъекторы
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                {[
+                  { icon: "Grid3x3",        title: "84 иглы",                 desc: "Максимальное покрытие продукта" },
+                  { icon: "Gauge",          title: "Давление до 4,3 бар",     desc: "Работа с вязкими маринадами без потери качества" },
+                  { icon: "Zap",            title: "Подпружиненные иглы",     desc: "Не ломаются при контакте с костью, равномерно покрывают продукт" },
+                  { icon: "ListChecks",     title: "До 99 программ работы",   desc: "Время, интервалы, вакуум, скорость — всё сохраняется" },
+                  { icon: "MoveHorizontal", title: "Зубчатый конвейер",       desc: "Боковые направляющие — продукт не сдвигается" },
+                  { icon: "Ruler",          title: "Шаг 15–60 мм",            desc: "Точная настройка под любой продукт" },
+                  { icon: "Repeat",         title: "Повторяемость",           desc: "Одинаковый шаг на каждой партии" },
+                  { icon: "Droplets",       title: "Мойка без разбора корпуса", desc: "Быстрая санитарная обработка без простоев" },
+                ].map((feat, i) => (
+                  <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all">
+                    <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <Icon name={feat.icon} fallback="Star" size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-xl text-foreground leading-snug">{feat.title}</p>
+                      <p className="text-base text-muted-foreground">{feat.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-2xl text-foreground leading-snug">{feat.title}</p>
-                    <p className="text-lg text-muted-foreground mt-0.5">{feat.desc}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
           </div>
