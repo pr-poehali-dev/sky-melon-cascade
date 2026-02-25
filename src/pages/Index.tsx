@@ -552,54 +552,71 @@ const Index = () => {
               Преимущества массажёров от Техно-Сиб
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                title: "Высокая производительность", desc: "До 4 т/ч при рабочем давлении до 4,3 бар",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><rect x="30" y="60" width="20" height="50" rx="4" fill="#BFDBFE"/><rect x="60" y="40" width="20" height="70" rx="4" fill="#93C5FD"/><rect x="90" y="20" width="20" height="90" rx="4" fill="#3B82F6"/><rect x="120" y="30" width="20" height="80" rx="4" fill="#2563EB"/><rect x="150" y="10" width="20" height="100" rx="4" fill="#1D4ED8"/><polyline points="40,55 70,35 100,15 130,25 160,5" stroke="#F59E0B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/><circle cx="160" cy="5" r="5" fill="#F59E0B"/></svg>)
-              },
-              {
-                title: "Глубокий вакуум", desc: "Вакуумный барабан до −0,1 МПа для интенсивного массирования",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><circle cx="100" cy="65" r="45" stroke="#3B82F6" strokeWidth="3" fill="#DBEAFE"/><circle cx="100" cy="65" r="30" stroke="#2563EB" strokeWidth="2" fill="#BFDBFE"/><circle cx="100" cy="65" r="15" fill="#3B82F6"/><line x1="100" y1="20" x2="100" y2="35" stroke="#1D4ED8" strokeWidth="2"/><line x1="100" y1="95" x2="100" y2="110" stroke="#1D4ED8" strokeWidth="2"/><line x1="55" y1="65" x2="70" y2="65" stroke="#1D4ED8" strokeWidth="2"/><line x1="130" y1="65" x2="145" y2="65" stroke="#1D4ED8" strokeWidth="2"/><text x="85" y="70" fill="white" fontSize="13" fontWeight="bold">−P</text></svg>)
-              },
-              {
-                title: "Широкий модельный ряд", desc: "Объём барабана 100–3000 л под любой объём производства",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><ellipse cx="50" cy="90" rx="22" ry="28" fill="#BFDBFE" stroke="#3B82F6" strokeWidth="2"/><ellipse cx="50" cy="62" rx="22" ry="8" fill="#93C5FD" stroke="#3B82F6" strokeWidth="2"/><ellipse cx="110" cy="82" rx="32" ry="38" fill="#93C5FD" stroke="#2563EB" strokeWidth="2"/><ellipse cx="110" cy="44" rx="32" ry="11" fill="#BFDBFE" stroke="#2563EB" strokeWidth="2"/><ellipse cx="172" cy="72" rx="18" ry="48" fill="#3B82F6" stroke="#1D4ED8" strokeWidth="2"/><ellipse cx="172" cy="24" rx="18" ry="7" fill="#60A5FA" stroke="#1D4ED8" strokeWidth="2"/></svg>)
-              },
-              {
-                title: "Пищевая нержавейка", desc: "Корпус из нержавеющей стали, соответствие санитарным нормам",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><rect x="40" y="30" width="120" height="80" rx="10" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="2"/><rect x="50" y="40" width="100" height="60" rx="6" fill="#F1F5F9"/><line x1="50" y1="55" x2="150" y2="55" stroke="#CBD5E1" strokeWidth="1.5"/><line x1="50" y1="70" x2="150" y2="70" stroke="#CBD5E1" strokeWidth="1.5"/><line x1="50" y1="85" x2="150" y2="85" stroke="#CBD5E1" strokeWidth="1.5"/><circle cx="100" cy="65" r="18" fill="#3B82F6" opacity="0.15" stroke="#3B82F6" strokeWidth="2"/><polyline points="90,65 97,73 113,55" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>)
-              },
-              {
-                title: "Быстрая мойка", desc: "Форма барабана оптимизирована для лёгкой очистки без простоев",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><path d="M60 40 Q100 20 140 40 L145 95 Q100 115 55 95 Z" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="2"/><path d="M80 30 Q80 15 80 5" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><path d="M100 25 Q100 10 100 0" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round"/><path d="M120 30 Q120 15 120 5" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><circle cx="80" cy="5" r="4" fill="#60A5FA"/><circle cx="100" cy="0" r="4" fill="#3B82F6"/><circle cx="120" cy="5" r="4" fill="#60A5FA"/><path d="M70 65 Q100 55 130 65" stroke="#2563EB" strokeWidth="2" strokeLinecap="round"/><path d="M75 78 Q100 68 125 78" stroke="#2563EB" strokeWidth="2" strokeLinecap="round"/></svg>)
-              },
-              {
-                title: "Точный посол", desc: "Регистр давления индивидуально на каждую иглу",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><rect x="35" y="35" width="130" height="55" rx="8" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="2"/><line x1="55" y1="90" x2="55" y2="115" stroke="#2563EB" strokeWidth="3" strokeLinecap="round"/><line x1="75" y1="90" x2="75" y2="108" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/><line x1="95" y1="90" x2="95" y2="115" stroke="#2563EB" strokeWidth="3" strokeLinecap="round"/><line x1="115" y1="90" x2="115" y2="108" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/><line x1="135" y1="90" x2="135" y2="115" stroke="#2563EB" strokeWidth="3" strokeLinecap="round"/><circle cx="55" cy="60" r="8" fill="#3B82F6"/><circle cx="75" cy="55" r="8" fill="#2563EB"/><circle cx="95" cy="60" r="8" fill="#3B82F6"/><circle cx="115" cy="55" r="8" fill="#2563EB"/><circle cx="135" cy="60" r="8" fill="#3B82F6"/></svg>)
-              },
-              {
-                title: "Гибкая настройка", desc: "Регулировка скорости, времени, вакуума и направления вращения",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><circle cx="100" cy="65" r="42" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="2"/><circle cx="100" cy="65" r="10" fill="#3B82F6"/><line x1="100" y1="23" x2="100" y2="40" stroke="#1D4ED8" strokeWidth="3" strokeLinecap="round"/><line x1="100" y1="90" x2="100" y2="107" stroke="#1D4ED8" strokeWidth="3" strokeLinecap="round"/><line x1="58" y1="65" x2="75" y2="65" stroke="#1D4ED8" strokeWidth="3" strokeLinecap="round"/><line x1="125" y1="65" x2="142" y2="65" stroke="#1D4ED8" strokeWidth="3" strokeLinecap="round"/><line x1="70" y1="35" x2="82" y2="47" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><line x1="118" y1="83" x2="130" y2="95" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><line x1="130" y1="35" x2="118" y2="47" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><line x1="82" y1="83" x2="70" y2="95" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/><path d="M88 53 L78 65 L88 77" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>)
-              },
-              {
-                title: "99 программ работы", desc: "Удобная загрузка и выгрузка сырья, сохранение режимов в памяти",
-                svg: (<svg viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full"><rect width="200" height="130" fill="#EFF6FF"/><rect x="30" y="25" width="140" height="90" rx="10" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="2"/><rect x="42" y="38" width="116" height="65" rx="6" fill="white"/><rect x="50" y="48" width="30" height="8" rx="3" fill="#BFDBFE"/><rect x="50" y="62" width="50" height="8" rx="3" fill="#93C5FD"/><rect x="50" y="76" width="40" height="8" rx="3" fill="#BFDBFE"/><rect x="118" y="48" width="28" height="14" rx="4" fill="#3B82F6"/><rect x="118" y="68" width="28" height="14" rx="4" fill="#2563EB"/><text x="124" y="59" fill="white" fontSize="9" fontWeight="bold">RUN</text><text x="122" y="79" fill="white" fontSize="9" fontWeight="bold">SAVE</text><circle cx="162" cy="108" r="8" fill="#F59E0B"/><text x="158" y="113" fill="white" fontSize="10" fontWeight="bold">99</text></svg>)
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-xl transition-all group"
-              >
-                <div className="overflow-hidden bg-[#EFF6FF]" style={{ aspectRatio: "16/9" }}>
-                  {item.svg}
+          <div className="flex flex-col lg:flex-row gap-10 items-start">
+
+            {/* Левая колонка — карточки товаров */}
+            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4">
+              {(catalogData?.massagers ?? []).slice(0, 4).map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/40 transition-all group cursor-pointer"
+                  onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
+                >
+                  <div className="bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                    {item.pictures[0] ? (
+                      <img
+                        src={item.pictures[0]}
+                        alt={item.name}
+                        className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Icon name="Package" size={40} className="text-muted-foreground/30" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-3">
+                    {item.brand && (
+                      <span className="text-xs font-bold text-primary uppercase tracking-wide">{item.brand}</span>
+                    )}
+                    <p className="text-sm font-semibold text-foreground leading-snug mt-0.5 line-clamp-2">{item.name}</p>
+                    {item.price_display && (
+                      <p className="text-base font-black text-primary mt-1">{item.price_display}</p>
+                    )}
+                  </div>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-lg text-foreground mb-2 leading-snug">{item.title}</h3>
-                  <p className="text-base text-muted-foreground leading-relaxed">{item.desc}</p>
+              ))}
+              {(!catalogData || catalogData.massagers.length === 0) && (
+                <div className="col-span-2 h-48 flex items-center justify-center text-muted-foreground">
+                  <Icon name="Loader2" size={32} className="animate-spin" />
                 </div>
-              </div>
-            ))}
+              )}
+            </div>
+
+            {/* Правая колонка — список преимуществ */}
+            <div className="w-full lg:w-1/2 flex flex-col gap-4">
+              {[
+                { icon: "Zap",               title: "Производительность до 4 т/ч",     desc: "Рабочее давление до 4,3 бар" },
+                { icon: "Gauge",             title: "Вакуумный барабан до −0,1 МПа",   desc: "Интенсивное массирование без потерь качества" },
+                { icon: "Database",          title: "Объём барабана 100–3000 л",        desc: "Широкий модельный ряд под любой объём производства" },
+                { icon: "ShieldCheck",       title: "Пищевая нержавеющая сталь",        desc: "Соответствие санитарным нормам" },
+                { icon: "Droplets",          title: "Быстрая мойка",                    desc: "Форма барабана оптимизирована под скоростную очистку" },
+                { icon: "Crosshair",         title: "Регистр давления на все иглы",     desc: "Точный и равномерный посол каждого куска" },
+                { icon: "SlidersHorizontal", title: "Регулируемые параметры",           desc: "Скорость, время, вакуум и направление вращения" },
+                { icon: "ListChecks",        title: "99 программ работы",               desc: "Удобная загрузка и выгрузка сырья" },
+              ].map((feat, i) => (
+                <div key={i} className="flex items-start gap-4 bg-white rounded-2xl border border-border px-5 py-4 hover:border-primary/40 hover:shadow-md transition-all">
+                  <div className="w-11 h-11 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Icon name={feat.icon} fallback="Star" size={22} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-base text-foreground leading-snug">{feat.title}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{feat.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
