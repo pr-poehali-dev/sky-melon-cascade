@@ -101,15 +101,15 @@ const Index = () => {
 
             <div className={`transition-all duration-1000 ${vis("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="inline-block text-xs font-semibold tracking-widest text-primary uppercase border border-primary/30 rounded-full px-4 py-1.5 mb-6 bg-primary/5">
-                Daribo · Niro-Tech · Поставка и внедрение
+                Поставка и внедрение
               </span>
               <h1 className="text-5xl lg:text-6xl xl:text-7xl font-display font-black leading-[1.05] tracking-tight mb-6 text-foreground">
                 Стабильный посол и{" "}
                 <span className="text-primary">выше выход</span>{" "}
                 с вакуумными массажерами
               </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-4 max-w-xl">
-                Поставка Daribo и Niro-Tech + подбор режимов под мясо, птицу и рыбу
+              <p className="text-xl font-semibold text-foreground leading-relaxed mb-3 max-w-xl">
+                Оборудование от ведущих производителей мясного оборудования Daribo, Niro-Tech, Hualian
               </p>
               <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-xl">
                 Ускоряем цикл, выравниваем качество партии, снижаем риск брака. Подбираем оборудование и настройки под ветчину, копчёности, деликатесы, фабрики-кухни.
@@ -132,9 +132,9 @@ const Index = () => {
               </ul>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#hero-form" className="px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-center">
-                  Рассчитать решение
-                </a>
+                <button onClick={() => setModalOpen(true)} className="px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-center">
+                  Получить предложение
+                </button>
                 <a href="#solutions" className="px-8 py-4 border-2 border-primary/30 text-primary rounded-full font-semibold text-lg hover:border-primary hover:bg-primary/5 transition-all text-center">
                   Смотреть оборудование
                 </a>
@@ -142,36 +142,42 @@ const Index = () => {
             </div>
 
             <div className={`transition-all duration-1000 delay-300 ${vis("hero") ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="space-y-4 mb-8">
                 {[
-                  { label: "SUS304",   sub: "Нержавеющая сталь",    icon: "Shield" },
-                  { label: "99 прогр", sub: "PLC-панель управления", icon: "Cpu" },
-                  { label: "84 иглы",  sub: "Регистр давления",      icon: "Pipette" },
-                  { label: "До 4 т/ч", sub: "Производительность",    icon: "Zap" },
+                  {
+                    icon: "Shield",
+                    label: "Высокое качество стали марки 304",
+                    sub: "Пищевая нержавеющая сталь гарантирует безопасность продукции и долговечность оборудования",
+                  },
+                  {
+                    icon: "Cpu",
+                    label: "Комплектующие мировых брендов",
+                    sub: "NORD, Mitsubishi, Schneider, SIEMENS и OMRON — лучшие компоненты для надёжной работы",
+                  },
+                  {
+                    icon: "Zap",
+                    label: "Безотказная работа",
+                    sub: "Исключительная долговечность и продолжительный срок службы оборудования",
+                  },
                 ].map((b, i) => (
-                  <div key={i} className="flex items-center gap-4 p-5 bg-white border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                  <div key={i} className="flex items-start gap-4 p-5 bg-white border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                     <div className="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl flex-shrink-0">
                       <Icon name={b.icon} fallback="Star" size={22} className="text-primary" />
                     </div>
                     <div>
-                      <p className="font-black text-xl text-foreground leading-tight">{b.label}</p>
-                      <p className="text-xs text-muted-foreground">{b.sub}</p>
+                      <p className="font-bold text-base text-foreground leading-tight mb-1">{b.label}</p>
+                      <p className="text-sm text-muted-foreground">{b.sub}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div id="hero-form" className="p-8 bg-white border border-border rounded-2xl shadow-xl">
-                <h3 className="font-display font-bold text-2xl mb-1 text-foreground">Рассчитать решение</h3>
-                <p className="text-sm text-muted-foreground mb-6">Менеджер свяжется в течение 2 часов</p>
-                <div className="space-y-4">
-                  <input type="text"  placeholder="Компания" className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-                  <input type="tel"   placeholder="Телефон"  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-                  <input type="email" placeholder="Почта"    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary transition-colors" />
-                  <button className="w-full py-3.5 bg-primary text-white rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all shadow-sm">
-                    Отправить заявку
-                  </button>
-                </div>
+              <div className="rounded-2xl overflow-hidden border border-border shadow-xl bg-white">
+                <img
+                  src="https://cdn.poehali.dev/files/e7ddde3a-0e1a-47f1-916d-405e3e61e337.jpg"
+                  alt="Вакуумный массажер Daribo"
+                  className="w-full h-auto object-contain"
+                />
               </div>
             </div>
           </div>
