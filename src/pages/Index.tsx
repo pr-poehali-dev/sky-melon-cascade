@@ -188,9 +188,8 @@ const Index = () => {
       <section id="pain" className="py-28 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("pain") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Проблема → Решение</span>
-            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
-              Выход и посол должны быть<br />повторяемыми
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight">
+              Качество посола и маринования
             </h2>
           </div>
 
@@ -223,7 +222,6 @@ const Index = () => {
               </div>
               <div className="space-y-3">
                 {[
-                  { icon: "TrendingDown", text: "Низкий выход — деньги уходят вместе с влагой" },
                   { icon: "AlertCircle",  text: "Непросол и пятна — рекламации и брак партий" },
                   { icon: "Clock",        text: "Длинный цикл посола сдерживает объёмы выпуска" },
                   { icon: "ThumbsDown",   text: "Жалобы на качество — неповторяемость вкуса" },
@@ -257,11 +255,17 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <a href="#cta" className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-primary text-white rounded-full font-semibold hover:bg-primary/90 transition-all shadow-sm">
-                <Icon name="Phone" size={15} />
-                Консультация технолога
-              </a>
             </div>
+          </div>
+
+          <div className={`text-center mt-12 transition-all duration-700 ${vis("pain") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <button
+              onClick={() => { setModalProduct("consult"); setModalOpen(true); }}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+            >
+              <Icon name="Phone" size={18} />
+              Получить консультацию технолога
+            </button>
           </div>
         </div>
       </section>
@@ -1198,27 +1202,28 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ─── МОДАЛ: ЗАПРОС ЦЕНЫ ─── */}
+      {/* ─── МОДАЛ ─── */}
       {modalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setModalOpen(false)}>
-          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="font-display font-bold text-2xl text-foreground">Запросить КП</h3>
-                {modalProduct && <p className="text-sm text-primary mt-1">{modalProduct}</p>}
+                <h3 className="font-display font-bold text-2xl text-foreground">
+                  {modalProduct === "consult" ? "Получить консультацию технолога" : modalProduct ? "Запросить КП" : "Получить предложение"}
+                </h3>
+                {modalProduct && modalProduct !== "consult" && (
+                  <p className="text-sm text-primary mt-1">{modalProduct}</p>
+                )}
               </div>
               <button onClick={() => setModalOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-background hover:bg-primary/10 transition-colors">
                 <Icon name="X" size={20} className="text-muted-foreground" />
               </button>
             </div>
             <div className="space-y-4">
-              <input type="text"  placeholder="Имя"       className={inputCls} />
-              <input type="text"  placeholder="Компания"  className={inputCls} />
-              <input type="tel"   placeholder="Телефон"   className={inputCls} />
-              <input type="email" placeholder="Почта"     className={inputCls} />
-              <textarea placeholder="Комментарий (объём, продукт, задача)" rows={3} className={inputCls + " resize-none"} />
+              <input type="text" placeholder="Имя"     className={inputCls} />
+              <input type="tel"  placeholder="Телефон" className={inputCls} />
               <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
-                Отправить запрос
+                Отправить
               </button>
               <p className="text-xs text-muted-foreground text-center">
                 Нажимая «Отправить», вы соглашаетесь с{" "}
