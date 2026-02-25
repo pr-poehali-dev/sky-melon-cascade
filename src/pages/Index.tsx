@@ -578,20 +578,13 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Правая колонка — фото товара DRB-GRY750 */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center">
-              {(() => {
-                const featured = catalogData?.massagers?.find(m => m.name.includes("DRB-GRY750")) ?? catalogData?.massagers?.[0];
-                if (!catalogData) return <Icon name="Loader2" size={32} className="animate-spin text-primary" />;
-                if (!featured?.pictures?.[0]) return null;
-                return (
-                  <img
-                    src={featured.pictures[0]}
-                    alt={featured.name}
-                    className="w-full max-w-lg object-contain drop-shadow-2xl"
-                  />
-                );
-              })()}
+            {/* Правая колонка — фото массажёра */}
+            <div className="w-full lg:w-1/2 self-stretch flex items-stretch">
+              <img
+                src="https://cdn.poehali.dev/files/2a585324-0221-4fb7-9aa4-6609095c7f34.jpg"
+                alt="Вакуумный массажер DRB-GRY750"
+                className="w-full h-full object-contain object-center"
+              />
             </div>
 
           </div>
