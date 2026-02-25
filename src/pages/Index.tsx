@@ -484,24 +484,24 @@ const Index = () => {
                               </div>
                             </>
                           )}
-                          {item.price_display && (
-                            <div className="absolute top-3 right-3 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-md">
-                              {item.price_display}
+                          {item.brand && (
+                            <div className="absolute top-3 left-3 bg-white/95 text-primary text-xs font-bold px-3 py-1 rounded-full shadow-sm border border-primary/20 uppercase tracking-wide">
+                              {item.brand}
                             </div>
                           )}
                         </div>
 
                         {/* Контент */}
                         <div className="p-5 flex flex-col flex-1">
-                          {item.brand && (
-                            <span className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{item.brand}</span>
-                          )}
                           <h3
-                            className="font-bold text-lg text-foreground mb-3 leading-snug cursor-pointer hover:text-primary transition-colors"
+                            className="font-bold text-lg text-foreground mb-2 leading-snug cursor-pointer hover:text-primary transition-colors"
                             onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
                           >
                             {item.name}
                           </h3>
+                          {item.price_display && (
+                            <p className="text-xl font-black text-primary mb-3">{item.price_display}</p>
+                          )}
 
                           {/* Ключевые параметры */}
                           <div className="space-y-1.5 mb-4 flex-1">
@@ -519,18 +519,18 @@ const Index = () => {
                             ))}
                           </div>
 
-                          <div className="flex gap-2 mt-2">
-                            <button
-                              onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
-                              className="flex-1 py-2.5 border border-primary/30 text-primary rounded-xl text-sm font-semibold hover:border-primary hover:bg-primary/5 transition-all"
-                            >
-                              Подробнее
-                            </button>
+                          <div className="flex flex-col gap-2 mt-2">
                             <button
                               onClick={() => { setInquiryItem(item); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
-                              className="flex-1 py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary/90 transition-all shadow-sm"
+                              className="w-full py-4 bg-primary text-white rounded-xl text-base font-bold hover:bg-primary/90 transition-all shadow-md"
                             >
                               Узнать подробней
+                            </button>
+                            <button
+                              onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
+                              className="w-full py-3.5 border-2 border-primary/30 text-primary rounded-xl text-base font-semibold hover:border-primary hover:bg-primary/5 transition-all"
+                            >
+                              Подробнее
                             </button>
                           </div>
                         </div>
@@ -629,23 +629,13 @@ const Index = () => {
                   />
                 )}
 
-                <div className="mt-auto space-y-2">
+                <div className="mt-auto">
                   <button
                     onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
-                    className="w-full py-3.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-md"
+                    className="w-full py-4 bg-primary text-white rounded-xl text-lg font-bold hover:bg-primary/90 transition-all shadow-md"
                   >
                     Узнать подробней
                   </button>
-                  {selectedItem.url && (
-                    <a
-                      href={selectedItem.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 border border-border rounded-xl text-sm text-muted-foreground hover:border-primary hover:text-primary transition-all text-center block"
-                    >
-                      На сайте поставщика →
-                    </a>
-                  )}
                 </div>
               </div>
             </div>
