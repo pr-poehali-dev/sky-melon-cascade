@@ -552,49 +552,10 @@ const Index = () => {
               Преимущества массажёров от Техно-Сиб
             </h2>
           </div>
-          <div className="flex flex-col lg:flex-row gap-10 items-start">
+          <div className="flex flex-col lg:flex-row gap-10 items-center">
 
-            {/* Левая колонка — карточки товаров */}
-            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4">
-              {(catalogData?.massagers ?? []).slice(0, 4).map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/40 transition-all group cursor-pointer"
-                  onClick={() => { setSelectedItem(item); setSelectedSlide(0); }}
-                >
-                  <div className="bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
-                    {item.pictures[0] ? (
-                      <img
-                        src={item.pictures[0]}
-                        alt={item.name}
-                        className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Icon name="Package" size={40} className="text-muted-foreground/30" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-3">
-                    {item.brand && (
-                      <span className="text-xs font-bold text-primary uppercase tracking-wide">{item.brand}</span>
-                    )}
-                    <p className="text-sm font-semibold text-foreground leading-snug mt-0.5 line-clamp-2">{item.name}</p>
-                    {item.price_display && (
-                      <p className="text-base font-black text-primary mt-1">{item.price_display}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-              {(!catalogData || catalogData.massagers.length === 0) && (
-                <div className="col-span-2 h-48 flex items-center justify-center text-muted-foreground">
-                  <Icon name="Loader2" size={32} className="animate-spin" />
-                </div>
-              )}
-            </div>
-
-            {/* Правая колонка — список преимуществ */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-4">
+            {/* Левая колонка — список преимуществ */}
+            <div className="w-full lg:w-1/2 flex flex-col gap-3">
               {[
                 { icon: "Zap",               title: "Производительность до 4 т/ч",     desc: "Рабочее давление до 4,3 бар" },
                 { icon: "Gauge",             title: "Вакуумный барабан до −0,1 МПа",   desc: "Интенсивное массирование без потерь качества" },
@@ -615,6 +576,46 @@ const Index = () => {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Правая колонка — фото первого массажёра */}
+            <div className="w-full lg:w-1/2">
+              {catalogData?.massagers?.[0] ? (
+                <div
+                  className="bg-white border border-border rounded-3xl overflow-hidden shadow-xl cursor-pointer group"
+                  onClick={() => { setSelectedItem(catalogData.massagers[0]); setSelectedSlide(0); }}
+                >
+                  <div className="bg-gray-50 overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                    {catalogData.massagers[0].pictures[0] ? (
+                      <img
+                        src={catalogData.massagers[0].pictures[0]}
+                        alt={catalogData.massagers[0].name}
+                        className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Icon name="Package" size={64} className="text-muted-foreground/20" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-6 py-5">
+                    {catalogData.massagers[0].brand && (
+                      <span className="text-xs font-bold text-primary uppercase tracking-widest">{catalogData.massagers[0].brand}</span>
+                    )}
+                    <p className="font-bold text-xl text-foreground mt-1 leading-snug">{catalogData.massagers[0].name}</p>
+                    {catalogData.massagers[0].price_display && (
+                      <p className="text-2xl font-black text-primary mt-2">{catalogData.massagers[0].price_display}</p>
+                    )}
+                    <p className="text-sm text-primary font-semibold mt-3 flex items-center gap-1">
+                      Подробнее <Icon name="ArrowRight" size={14} />
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="h-64 flex items-center justify-center">
+                  <Icon name="Loader2" size={32} className="animate-spin text-primary" />
+                </div>
+              )}
             </div>
 
           </div>
