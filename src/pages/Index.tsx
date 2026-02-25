@@ -280,32 +280,21 @@ const Index = () => {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {[
               {
                 icon: "RefreshCw",
                 title: "Вакуумные массажеры",
                 desc: "Бережное вакуумное массирование — рассол проникает глубже, текстура лучше, цикл короче. Регулируемые режимы: время, вакуум, скорость.",
-                cta: "Подробнее о массажерах",
-                href: "#massager",
                 specs: ["до −0.1 МПа вакуум", "100–3000 л объём", "SUS304"],
+                highlight: false,
               },
               {
                 icon: "Pipette",
                 title: "Инъекторы рассола",
                 desc: "84 иглы с регистром давления, до 4 т/ч, до 4,3 бар. Равномерное распределение рассола — без пятен и недосола по всему объёму.",
-                cta: "Подробнее об инъекторах",
-                href: "#injector",
-                highlight: true,
                 specs: ["84 иглы", "до 4 т/ч", "до 4,3 бар"],
-              },
-              {
-                icon: "FlaskConical",
-                title: "Смеси рассолов",
-                desc: "Готовые рецептуры под мясо, птицу и рыбу. Повторяемость вкуса, быстрый запуск производства, снижение % брака.",
-                cta: "Запросить рецептуру",
-                href: "#cta",
-                specs: ["Мясо / Птица / Рыба", "Быстрый старт", "Снижение брака"],
+                highlight: true,
               },
             ].map((card, i) => (
               <div
@@ -313,25 +302,28 @@ const Index = () => {
                 className={`group transition-all duration-700 ${vis("solutions") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{ transitionDelay: `${i * 150}ms` }}
               >
-                <div className={`h-full flex flex-col p-8 border-2 rounded-2xl bg-white shadow-sm hover:shadow-xl transition-all ${card.highlight ? "border-primary shadow-primary/10" : "border-border hover:border-primary/40"}`}>
+                <div className={`h-full flex flex-col p-10 border-2 rounded-2xl bg-white shadow-sm hover:shadow-xl transition-all ${card.highlight ? "border-primary shadow-primary/10" : "border-border hover:border-primary/40"}`}>
                   {card.highlight && (
                     <div className="mb-4">
-                      <span className="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full">Популярно</span>
+                      <span className="text-sm font-bold bg-primary text-white px-4 py-1.5 rounded-full">Популярно</span>
                     </div>
                   )}
-                  <div className={`w-20 h-20 flex items-center justify-center rounded-2xl mb-6 ${card.highlight ? "bg-primary" : "bg-primary/10"}`}>
-                    <Icon name={card.icon} fallback="Star" size={38} className={card.highlight ? "text-white" : "text-primary"} />
+                  <div className={`w-24 h-24 flex items-center justify-center rounded-2xl mb-8 ${card.highlight ? "bg-primary" : "bg-primary/10"}`}>
+                    <Icon name={card.icon} fallback="Star" size={46} className={card.highlight ? "text-white" : "text-primary"} />
                   </div>
-                  <h3 className="font-display font-bold text-2xl mb-3 text-foreground">{card.title}</h3>
-                  <p className="text-muted-foreground text-base leading-relaxed mb-6 flex-1">{card.desc}</p>
-                  <div className="flex flex-wrap gap-2 mb-8">
+                  <h3 className="font-display font-bold text-3xl mb-4 text-foreground">{card.title}</h3>
+                  <p className="text-foreground/70 text-xl leading-relaxed mb-8 flex-1">{card.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-10">
                     {card.specs.map((s, j) => (
-                      <span key={j} className="text-xs font-medium px-3 py-1 bg-primary/8 text-primary border border-primary/20 rounded-full">{s}</span>
+                      <span key={j} className="text-sm font-medium px-4 py-1.5 bg-primary/8 text-primary border border-primary/20 rounded-full">{s}</span>
                     ))}
                   </div>
-                  <a href={card.href} className={`w-full py-3.5 rounded-xl font-semibold text-base text-center transition-all ${card.highlight ? "bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20" : "border-2 border-primary/30 text-primary hover:border-primary hover:bg-primary/5"}`}>
-                    {card.cta}
-                  </a>
+                  <button
+                    onClick={() => { setModalProduct(card.title); setModalOpen(true); }}
+                    className={`w-full py-4 rounded-xl font-bold text-lg text-center transition-all ${card.highlight ? "bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20" : "border-2 border-primary/30 text-primary hover:border-primary hover:bg-primary/5"}`}
+                  >
+                    Оставить заявку
+                  </button>
                 </div>
               </div>
             ))}
