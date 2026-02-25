@@ -548,32 +548,35 @@ const Index = () => {
       <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-white to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold tracking-widest text-primary uppercase">Техно-Сиб</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight mt-3 text-foreground">
+            <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight text-foreground">
               Преимущества массажёров от Техно-Сиб
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: "Zap",          title: "Высокая производительность", desc: "До 4 т/ч при рабочем давлении до 4,3 бар" },
-              { icon: "Gauge",        title: "Глубокий вакуум",            desc: "Вакуумный барабан до −0,1 МПа для интенсивного массирования" },
-              { icon: "Database",     title: "Широкий модельный ряд",      desc: "Объём барабана 100–3000 л под любой объём производства" },
-              { icon: "ShieldCheck",  title: "Пищевая нержавейка",         desc: "Корпус из нержавеющей стали, соответствие санитарным нормам" },
-              { icon: "Droplets",     title: "Быстрая мойка",              desc: "Форма барабана оптимизирована для лёгкой очистки без простоев" },
-              { icon: "Crosshair",    title: "Точный посол",               desc: "Регистр давления индивидуально на каждую иглу" },
-              { icon: "SlidersHorizontal", title: "Гибкая настройка",     desc: "Регулировка скорости, времени, вакуума и направления вращения" },
-              { icon: "ListChecks",   title: "99 программ работы",         desc: "Удобная загрузка и выгрузка сырья, сохранение режимов в памяти" },
+              { img: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=400&q=80", title: "Высокая производительность", desc: "До 4 т/ч при рабочем давлении до 4,3 бар" },
+              { img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80", title: "Глубокий вакуум",            desc: "Вакуумный барабан до −0,1 МПа для интенсивного массирования" },
+              { img: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=80", title: "Широкий модельный ряд",      desc: "Объём барабана 100–3000 л под любой объём производства" },
+              { img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&q=80", title: "Пищевая нержавейка",         desc: "Корпус из нержавеющей стали, соответствие санитарным нормам" },
+              { img: "https://images.unsplash.com/photo-1628102491629-778571d893a3?w=400&q=80", title: "Быстрая мойка",              desc: "Форма барабана оптимизирована для лёгкой очистки без простоев" },
+              { img: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80", title: "Точный посол",               desc: "Регистр давления индивидуально на каждую иглу" },
+              { img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80", title: "Гибкая настройка",          desc: "Регулировка скорости, времени, вакуума и направления вращения" },
+              { img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=80", title: "99 программ работы",         desc: "Удобная загрузка и выгрузка сырья, сохранение режимов в памяти" },
             ].map((item, i) => (
               <div
                 key={i}
-                className="bg-white border border-border rounded-2xl p-6 flex flex-col gap-4 hover:border-primary/50 hover:shadow-lg transition-all group"
+                className="bg-white border border-border rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-xl transition-all group"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <Icon name={item.icon} fallback="Star" size={24} className="text-primary" />
+                <div className="overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div>
-                  <h3 className="font-bold text-base text-foreground mb-1 leading-snug">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                <div className="p-5">
+                  <h3 className="font-bold text-lg text-foreground mb-2 leading-snug">{item.title}</h3>
+                  <p className="text-base text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
