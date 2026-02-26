@@ -45,6 +45,12 @@ const CompareForm = () => {
         >
           Отправить
         </button>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          Отправляя форму, я соглашаюсь с{" "}
+          <a href="https://t-sib.ru/assets/politika_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">политикой обработки персональных данных</a>
+          {" "}и даю{" "}
+          <a href="https://t-sib.ru/assets/soglasie_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">согласие на обработку персональных данных</a>.
+        </p>
       </div>
     </div>
   );
@@ -123,6 +129,12 @@ const QuizBlock = () => {
             >
               Отправить
             </button>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Отправляя форму, я соглашаюсь с{" "}
+              <a href="https://t-sib.ru/assets/politika_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">политикой обработки персональных данных</a>
+              {" "}и даю{" "}
+              <a href="https://t-sib.ru/assets/soglasie_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">согласие на обработку персональных данных</a>.
+            </p>
           </div>
         </div>
       )}
@@ -130,12 +142,22 @@ const QuizBlock = () => {
   );
 };
 
+const CONSENT_TEXT = (
+  <p className="text-xs text-muted-foreground leading-relaxed">
+    Отправляя форму, я соглашаюсь с{" "}
+    <a href="https://t-sib.ru/assets/politika_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">политикой обработки персональных данных</a>
+    {" "}и даю{" "}
+    <a href="https://t-sib.ru/assets/soglasie_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">согласие на обработку персональных данных</a>.
+  </p>
+);
+
 const Index = () => {
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [catalogExpanded, setCatalogExpanded] = useState(false);
 
   // Catalog state
   const [catalogTab, setCatalogTab] = useState<"massagers" | "injectors">("massagers");
@@ -198,11 +220,11 @@ const Index = () => {
   }, [catalogData, catalogTab, catalogSearch]);
 
   const navLinks = [
-    { href: "#solutions",  label: "Решения" },
-    { href: "#massager",   label: "Массажеры" },
-    { href: "#injector",   label: "Инъекторы" },
     { href: "#catalog",    label: "Каталог" },
+    { href: "#benefits",   label: "Преимущества" },
     { href: "#selector",   label: "Подбор" },
+    { href: "#about",      label: "О компании" },
+    { href: "#faq",        label: "FAQ" },
     { href: "#contacts",   label: "Контакты" },
   ];
 
@@ -266,10 +288,10 @@ const Index = () => {
                 <span className="text-primary">выше выход</span>{" "}
                 с вакуумными массажерами
               </h1>
-              <p className="text-xl font-semibold text-foreground leading-relaxed mb-3 max-w-xl">
-                Оборудование от ведущих производителей мясного оборудования Daribo, Niro-Tech, Hualian
+              <p className="text-2xl font-semibold text-foreground leading-relaxed mb-3 max-w-xl">
+                Оборудование от ведущих производителей мясного оборудования Daribo, Niro-Tech, INWESTPOL
               </p>
-              <p className="text-base text-muted-foreground leading-relaxed mb-10 max-w-xl">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-10 max-w-xl">
                 Ускоряем цикл, выравниваем качество партии, снижаем риск брака. Подбираем оборудование и настройки под ветчину, копчёности, деликатесы, фабрики-кухни.
               </p>
 
@@ -343,7 +365,7 @@ const Index = () => {
       </section>
 
       {/* ЭКРАН 2: БОЛИ vs РЕШЕНИЕ */}
-      <section id="pain" className="py-28 px-6 bg-white">
+      <section id="pain" className="py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("pain") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight">
@@ -429,7 +451,7 @@ const Index = () => {
       </section>
 
       {/* ЭКРАН 3: 3 КАРТОЧКИ */}
-      <section id="solutions" className="py-28 px-6 bg-background">
+      <section id="solutions" className="py-12 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("solutions") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">Оборудование</span>
@@ -490,7 +512,7 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 9: КАТАЛОГ ─── */}
-      <section id="catalog" className="py-28 px-6 bg-background">
+      <section id="catalog" className="py-12 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           {/* Заголовок */}
           <div className="text-center mb-12">
@@ -550,8 +572,9 @@ const Index = () => {
                   <p className="text-lg">Ничего не найдено по запросу «{catalogSearch}»</p>
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-                  {filteredItems().map((item, i) => {
+                <div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {(catalogExpanded ? filteredItems() : filteredItems().slice(0, 12)).map((item, i) => {
                     const slide = cardSlides[item.id] || 0;
                     return (
                       <div
@@ -646,6 +669,18 @@ const Index = () => {
                     );
                   })}
                 </div>
+                {!catalogExpanded && filteredItems().length > 12 && (
+                  <div className="text-center mb-8">
+                    <button
+                      onClick={() => setCatalogExpanded(true)}
+                      className="inline-flex items-center gap-2 px-8 py-4 border-2 border-primary/30 text-primary rounded-full font-bold text-lg hover:border-primary hover:bg-primary/5 transition-all"
+                    >
+                      Смотреть далее
+                      <Icon name="ChevronDown" size={20} />
+                    </button>
+                  </div>
+                )}
+                </div>
               )}
             </>
           )}
@@ -653,7 +688,7 @@ const Index = () => {
       </section>
 
       {/* ─── ПРЕИМУЩЕСТВА НАШЕГО ОБОРУДОВАНИЯ ─── */}
-      <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-white to-primary/10">
+      <section className="py-12 px-6 bg-gradient-to-br from-primary/5 via-white to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-4xl lg:text-5xl font-display font-black tracking-tight text-foreground">
@@ -867,6 +902,7 @@ const Index = () => {
                   >
                     Отправить
                   </button>
+                  {CONSENT_TEXT}
                 </div>
               </>
             ) : (
@@ -885,7 +921,7 @@ const Index = () => {
 
 
       {/* ─── ЭКРАН 10: ПРЕИМУЩЕСТВА 6 ПЛИТОК ─── */}
-      <section id="benefits" className="py-28 px-6 bg-white">
+      <section id="benefits" className="py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("benefits") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">После внедрения</span>
@@ -923,11 +959,10 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 11: СРАВНЕНИЕ ─── */}
-      <section id="compare" className="py-28 px-6 bg-background">
+      <section id="compare" className="py-12 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("compare") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Сравнение</span>
-            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight">
               Почему это работает лучше
             </h2>
           </div>
@@ -981,7 +1016,7 @@ const Index = () => {
       </section>
 
       {/* ─── ВИДЕО ─── */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-12 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">Смотрите в деле</span>
@@ -1002,7 +1037,7 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 12: ПОДБОР — КВИЗ ─── */}
-      <section id="selector" className="py-28 px-6 bg-background">
+      <section id="selector" className="py-12 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("selector") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">Подбор оборудования</span>
@@ -1016,11 +1051,10 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 13: ВНЕДРЕНИЕ И СЕРВИС ─── */}
-      <section id="service" className="py-28 px-6 bg-background">
+      <section id="service" className="py-12 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("service") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Внедрение и сервис</span>
-            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight">
               От подбора до запуска — под ключ
             </h2>
           </div>
@@ -1040,8 +1074,8 @@ const Index = () => {
                   <span className="font-black text-3xl text-primary/20">{s.step}</span>
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-foreground mb-2">{s.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{s.desc}</p>
+                  <h3 className="font-bold text-2xl text-foreground mb-2">{s.title}</h3>
+                  <p className="text-muted-foreground text-base leading-relaxed">{s.desc}</p>
                 </div>
                 {i < 3 && (
                   <div className="hidden md:block absolute -right-4 top-1/2 -translate-y-1/2 z-10">
@@ -1064,13 +1098,13 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 14: О КОМПАНИИ ─── */}
-      <section id="about" className="py-28 px-6 bg-white">
+      <section id="about" className="py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className={`transition-all duration-1000 ${vis("about") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="text-xs font-semibold tracking-widest text-primary uppercase">О компании</span>
-              <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-6 text-foreground leading-tight">
-                Daribo
+              <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 mb-6 text-foreground whitespace-nowrap">
+                О компании Daribo
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-5">
                 Мы предлагаем оборудование компании <strong className="text-foreground">Daribo</strong>. «Shanghai DARIBO Food Machinery Co., Ltd» — крупный производитель оборудования для пищевой промышленности, базирующийся в Шанхае.
@@ -1081,7 +1115,7 @@ const Index = () => {
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Специализация Daribo включает <strong className="text-foreground">вакуумные массажеры</strong> (серия GRY, например DRB-GRY750L), <strong className="text-foreground">инъекторы рассола</strong>, мясорезки, котлетные машины и полные производственные линии под ключ.
               </p>
-              <div className="grid grid-cols-2 gap-3 mb-10">
+              <div className="grid grid-cols-2 gap-3">
                 {[
                   { icon: "Building2",  text: "Производитель: Шанхай" },
                   { icon: "Globe",      text: "Поставки в 20+ стран" },
@@ -1094,26 +1128,21 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <a href="#contacts" className={btnPrimary + " inline-flex items-center gap-2"}>
-                Связаться
-                <Icon name="Phone" size={18} />
-              </a>
             </div>
 
             <div className={`transition-all duration-1000 delay-300 ${vis("about") ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-              <div className="w-full aspect-[4/3] bg-primary/5 border-2 border-dashed border-primary/20 rounded-3xl flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
-                  <Icon name="Image" size={48} className="mx-auto mb-3 opacity-40" />
-                  <p className="text-sm">Место для фото оборудования</p>
-                </div>
-              </div>
+              <img
+                src="https://cdn.poehali.dev/files/dbffb4e8-22d1-4072-9a78-6ecbbe2efa4f.jpg"
+                alt="Завод Daribo, Шанхай"
+                className="w-full rounded-3xl shadow-xl object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── ЭКРАН 15: FAQ ─── */}
-      <section id="faq" className="py-28 px-6 bg-background">
+      <section id="faq" className="py-12 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("faq") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="text-xs font-semibold tracking-widest text-primary uppercase">FAQ</span>
@@ -1158,11 +1187,10 @@ const Index = () => {
       </section>
 
       {/* ─── ЭКРАН 16: КОНТАКТЫ ─── */}
-      <section id="contacts" className="py-28 px-6 bg-white">
+      <section id="contacts" className="py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className={`text-center mb-16 transition-all duration-1000 ${vis("contacts") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <span className="text-xs font-semibold tracking-widest text-primary uppercase">Связаться</span>
-            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight mt-4 text-foreground leading-tight">
+            <h2 className="text-5xl lg:text-6xl font-display font-black tracking-tight text-foreground leading-tight">
               Обсудим вашу задачу
             </h2>
           </div>
@@ -1181,8 +1209,7 @@ const Index = () => {
                   <div className="space-y-4">
                     {[
                       { icon: "Phone",  label: "Телефон",  value: "+7 (000) 000-00-00" },
-                      { icon: "Mail",   label: "Почта",    value: "info@niro-tech.ru" },
-                      { icon: "Clock",  label: "График",   value: "Пн–Пт, 9:00–18:00 МСК" },
+                      { icon: "Mail",   label: "Почта",    value: "info@t-sib.ru" },
                     ].map((c, i) => (
                       <div key={i} className="flex items-center gap-4 p-4 bg-white border border-primary/10 rounded-xl">
                         <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -1202,21 +1229,16 @@ const Index = () => {
             {/* Правая — форма */}
             <div className={`transition-all duration-1000 delay-300 ${vis("contacts") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
               <div className="p-8 bg-background border-2 border-primary/15 rounded-3xl shadow-sm">
-                <h3 className="font-display font-bold text-2xl mb-2 text-foreground">Отправить запрос</h3>
+                <h3 className="font-display font-bold text-2xl mb-2 text-foreground">Отправить вопрос</h3>
                 <p className="text-muted-foreground mb-6 text-sm">Технолог ответит в течение 2 часов</p>
                 <div className="space-y-4">
-                  <input type="text"  placeholder="Имя"       className={inputCls} />
-                  <input type="text"  placeholder="Компания"  className={inputCls} />
-                  <input type="tel"   placeholder="Телефон"   className={inputCls} />
-                  <input type="email" placeholder="Почта"     className={inputCls} />
+                  <input type="text" placeholder="Имя *" required className={inputCls} />
+                  <input type="tel"  placeholder="Телефон *" required className={inputCls} />
                   <textarea placeholder="Комментарий (продукт, объём, задача)" rows={4} className={inputCls + " resize-none"} />
                   <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
-                    Отправить запрос
+                    Отправить
                   </button>
-                  <p className="text-xs text-muted-foreground text-center">
-                    Нажимая «Отправить», вы соглашаетесь с{" "}
-                    <a href="#" className="text-primary hover:underline">политикой обработки данных</a>
-                  </p>
+                  {CONSENT_TEXT}
                 </div>
               </div>
             </div>
@@ -1242,15 +1264,12 @@ const Index = () => {
               </button>
             </div>
             <div className="space-y-4">
-              <input type="text" placeholder="Имя"     className={inputCls} />
-              <input type="tel"  placeholder="Телефон" className={inputCls} />
+              <input type="text" placeholder="Имя *" required className={inputCls} />
+              <input type="tel"  placeholder="Телефон *" required className={inputCls} />
               <button className="w-full py-4 bg-primary text-white rounded-xl font-bold text-base hover:bg-primary/90 transition-all shadow-sm">
                 Отправить
               </button>
-              <p className="text-xs text-muted-foreground text-center">
-                Нажимая «Отправить», вы соглашаетесь с{" "}
-                <a href="#" className="text-primary hover:underline">политикой обработки данных</a>
-              </p>
+              {CONSENT_TEXT}
             </div>
           </div>
         </div>
@@ -1272,18 +1291,18 @@ const Index = () => {
                   <Icon name="Phone" size={14} className="text-primary" />
                   +7 (000) 000-00-00
                 </a>
-                <a href="mailto:info@niro-tech.ru" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
+                <a href="mailto:info@t-sib.ru" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
                   <Icon name="Mail" size={14} className="text-primary" />
-                  info@niro-tech.ru
+                  info@t-sib.ru
                 </a>
               </div>
             </div>
             <div>
               <p className="font-semibold text-sm text-foreground mb-3">Оборудование</p>
               <div className="space-y-2">
-                {["#massager", "#gr", "#injector", "#perf", "#conveyor"].map((href, i) => (
+                {["#solutions", "#catalog"].map((href, i) => (
                   <a key={i} href={href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {["Вакуумные массажеры", "Серия GR", "Инъекторы рассола", "Производительность", "Конвейер и шаг"][i]}
+                    {["Вакуумные массажеры и инъекторы", "Каталог"][i]}
                   </a>
                 ))}
               </div>
@@ -1291,9 +1310,9 @@ const Index = () => {
             <div>
               <p className="font-semibold text-sm text-foreground mb-3">Компания</p>
               <div className="space-y-2">
-                {["#catalog", "#benefits", "#compare", "#service", "#about", "#faq"].map((href, i) => (
+                {["#benefits", "#compare", "#service", "#about", "#faq"].map((href, i) => (
                   <a key={i} href={href} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {["Каталог", "Преимущества", "Сравнение", "Внедрение и сервис", "О компании", "FAQ"][i]}
+                    {["Преимущества", "Почему работает лучше", "От подбора до запуска", "О компании Daribo", "FAQ"][i]}
                   </a>
                 ))}
               </div>
@@ -1312,12 +1331,9 @@ const Index = () => {
               </div>
             </div>
           </div>
-          <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-            <p>© 2025 Daribo & Niro-Tech. Все права защищены.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-primary transition-colors">Политика обработки данных</a>
-              <a href="#" className="hover:text-primary transition-colors">Согласие на обработку</a>
-            </div>
+          <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-end gap-6 text-xs text-muted-foreground">
+            <a href="https://t-sib.ru/assets/politika_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Политика обработки данных</a>
+            <a href="https://t-sib.ru/assets/soglasie_t-sib16.05.25.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Согласие на обработку</a>
           </div>
         </div>
       </footer>
