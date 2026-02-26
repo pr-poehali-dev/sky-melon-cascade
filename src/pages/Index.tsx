@@ -763,10 +763,11 @@ const Index = () => {
 
       {/* Модал: детальная карточка товара */}
       {selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4" onClick={() => setSelectedItem(null)}>
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <div
-            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            className="relative bg-white w-full sm:rounded-3xl shadow-2xl sm:max-w-4xl rounded-t-3xl overflow-hidden"
+            style={{ maxHeight: "95dvh" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Закрыть */}
@@ -777,9 +778,14 @@ const Index = () => {
               <Icon name="X" size={18} className="text-foreground" />
             </button>
 
-            <div className="grid lg:grid-cols-2 gap-0">
+            {/* Мобильная ручка */}
+            <div className="sm:hidden flex justify-center pt-3 pb-1">
+              <div className="w-10 h-1 bg-border rounded-full" />
+            </div>
+
+            <div className="flex flex-col sm:grid sm:grid-cols-2 overflow-y-auto" style={{ maxHeight: "calc(95dvh - 0px)" }}>
               {/* Слайдер фото */}
-              <div className="bg-gray-50 rounded-tl-3xl rounded-bl-3xl p-6 flex flex-col gap-4">
+              <div className="bg-gray-50 sm:rounded-tl-3xl p-4 sm:p-6 flex flex-col gap-3 flex-shrink-0">
                 <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm" style={{ aspectRatio: "4/3" }}>
                   <img
                     src={selectedItem.pictures[selectedSlide]}
@@ -809,7 +815,7 @@ const Index = () => {
                       <button
                         key={pi}
                         onClick={() => setSelectedSlide(pi)}
-                        className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${pi === selectedSlide ? "border-primary shadow-md" : "border-transparent opacity-60 hover:opacity-100"}`}
+                        className={`flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all ${pi === selectedSlide ? "border-primary shadow-md" : "border-transparent opacity-60 hover:opacity-100"}`}
                       >
                         <img src={pic} alt="" className="w-full h-full object-contain bg-white p-1" />
                       </button>
@@ -819,41 +825,41 @@ const Index = () => {
               </div>
 
               {/* Информация */}
-              <div className="p-8 flex flex-col">
+              <div className="p-5 sm:p-8 flex flex-col gap-3">
                 {selectedItem.brand && (
-                  <span className="text-xs font-bold text-primary uppercase tracking-widest mb-2">{selectedItem.brand}</span>
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest">{selectedItem.brand}</span>
                 )}
-                <h2 className="text-2xl font-display font-black text-foreground mb-2 leading-tight">{selectedItem.name}</h2>
+                <h2 className="text-xl sm:text-2xl font-display font-black text-foreground leading-tight">{selectedItem.name}</h2>
                 {selectedItem.price_display && (
-                  <p className="text-3xl font-black text-primary mb-4">{selectedItem.price_display}</p>
+                  <p className="text-2xl sm:text-3xl font-black text-primary">{selectedItem.price_display}</p>
                 )}
 
                 {/* Все характеристики */}
-                <div className="space-y-2 mb-6 max-h-48 overflow-y-auto pr-1">
-                  {selectedItem.all_params.map((p, pi) => (
-                    <div key={pi} className="flex justify-between gap-4 py-1.5 border-b border-border/50 text-sm">
-                      <span className="text-muted-foreground flex-shrink-0">{p.name}</span>
-                      <span className="font-medium text-foreground text-right">{p.value}</span>
-                    </div>
-                  ))}
-                </div>
+                {selectedItem.all_params.length > 0 && (
+                  <div className="space-y-1.5">
+                    {selectedItem.all_params.map((p, pi) => (
+                      <div key={pi} className="flex justify-between gap-4 py-1 border-b border-border/50 text-sm">
+                        <span className="text-muted-foreground flex-shrink-0">{p.name}</span>
+                        <span className="font-medium text-foreground text-right">{p.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Описание */}
                 {selectedItem.description && (
                   <div
-                    className="text-sm text-muted-foreground leading-relaxed mb-6 max-h-28 overflow-y-auto pr-1 border-t border-border/50 pt-4"
+                    className="text-sm text-muted-foreground leading-relaxed border-t border-border/50 pt-3"
                     dangerouslySetInnerHTML={{ __html: selectedItem.description }}
                   />
                 )}
 
-                <div className="mt-auto">
-                  <button
-                    onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
-                    className="w-full py-4 bg-primary text-white rounded-xl text-lg font-bold hover:bg-primary/90 transition-all shadow-md"
-                  >
-                    Узнать подробней
-                  </button>
-                </div>
+                <button
+                  onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
+                  className="w-full py-4 bg-primary text-white rounded-xl text-lg font-bold hover:bg-primary/90 transition-all shadow-md mt-2"
+                >
+                  Узнать подробней
+                </button>
               </div>
             </div>
           </div>
