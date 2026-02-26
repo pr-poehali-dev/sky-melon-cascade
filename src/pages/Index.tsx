@@ -1209,6 +1209,68 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ─── О КОМПАНИИ ТЕХНО-СИБ ─── */}
+      <section className="py-12 px-6 bg-gradient-to-b from-background to-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-display font-black text-center mb-10 text-foreground">
+            О компании ТЕХНО-СИБ
+          </h2>
+
+          <div className="grid sm:grid-cols-3 gap-5 mb-8">
+            {[
+              { icon: "Calendar",  title: "25 лет на рынке",       desc: "Опыт работы с 2001 года" },
+              { icon: "MapPin",    title: "2 города",               desc: "Офисы в Москве и Новосибирске" },
+              { icon: "Globe",     title: "Проверенные партнёры",   desc: "Из Европы, России и Китая" },
+            ].map((s, i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name={s.icon} fallback="Star" size={30} className="text-primary" />
+                </div>
+                <h3 className="font-bold text-lg text-foreground mb-1">{s.title}</h3>
+                <p className="text-muted-foreground text-sm">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-lg p-7 sm:p-10">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-5">
+              Компания <strong className="text-foreground">«Техно-Сиб»</strong> — надёжный поставщик и партнёр в сфере профессионального пищевого и фасовочно-упаковочного оборудования. Мы работаем с 2001 года и уже 25 лет помогаем предприятиям эффективно оснащать производства, предоставляем сервисное обслуживание, а также реализуем упаковочные и расходные материалы.
+            </p>
+
+            <div className="border-l-4 border-primary bg-primary/5 rounded-r-xl px-5 py-4 mb-5">
+              <p className="font-medium text-foreground">
+                Мы сотрудничаем с ведущими заводами-производителями Европы, России и Китая, подбирая решения под задачи и бюджет клиента.
+              </p>
+            </div>
+
+            <p className="text-lg text-muted-foreground leading-relaxed mb-5">
+              Собственные офисы продаж, склады, сервисная служба и отлаженная логистика в Москве и Новосибирске позволяют нам оперативно выполнять поставки и поддерживать оборудование на территории России и стран СНГ.
+            </p>
+
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              Экспертиза наших специалистов помогает решать задачи любого уровня сложности — от подбора единичной позиции до комплексного оснащения. <strong className="text-foreground">«Техно-Сиб»</strong> всегда предложит оптимальное решение для вашего бизнеса и обеспечит надёжную поддержку на всех этапах работы.
+            </p>
+
+            <div className="border-t border-border/50 pt-7 grid sm:grid-cols-2 gap-5">
+              {[
+                { title: "Комплексные решения",    desc: "От подбора оборудования до сервисного обслуживания" },
+                { title: "Быстрая доставка",       desc: "Собственная логистика по всей России и СНГ" },
+                { title: "Сервисная поддержка",    desc: "Гарантийное и постгарантийное обслуживание" },
+                { title: "Экспертная консультация",desc: "Помощь в выборе оптимального решения" },
+              ].map((f, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <Icon name="CheckCircle" size={22} className="text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">{f.title}</p>
+                    <p className="text-sm text-muted-foreground">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── ЭКРАН 16: КОНТАКТЫ ─── */}
       <section id="contacts" className="py-12 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
