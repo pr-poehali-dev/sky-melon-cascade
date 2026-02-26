@@ -783,80 +783,97 @@ const Index = () => {
               <div className="w-10 h-1 bg-border rounded-full" />
             </div>
 
-            <div className="flex flex-col sm:grid sm:grid-cols-2 overflow-y-auto" style={{ maxHeight: "calc(95dvh - 0px)" }}>
-              {/* Слайдер фото */}
-              <div className="bg-gray-50 sm:rounded-tl-3xl p-4 sm:p-6 flex flex-col gap-3 flex-shrink-0">
-                <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm" style={{ aspectRatio: "4/3" }}>
-                  <img
-                    src={selectedItem.pictures[selectedSlide]}
-                    alt={selectedItem.name}
-                    className="w-full h-full object-contain p-4"
-                  />
+            <div className="overflow-y-auto" style={{ maxHeight: "95dvh" }}>
+              {/* Верхний блок: фото + заголовок рядом на десктопе, стопкой на мобиле */}
+              <div className="flex flex-col sm:flex-row gap-0">
+                {/* Фото */}
+                <div className="bg-gray-50 p-4 sm:p-6 flex flex-col gap-3 sm:w-80 flex-shrink-0">
+                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm" style={{ aspectRatio: "4/3" }}>
+                    <img
+                      src={selectedItem.pictures[selectedSlide]}
+                      alt={selectedItem.name}
+                      className="w-full h-full object-contain p-3"
+                    />
+                    {selectedItem.pictures.length > 1 && (
+                      <>
+                        <button
+                          onClick={() => setSelectedSlide((s) => (s - 1 + selectedItem.pictures.length) % selectedItem.pictures.length)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
+                        >
+                          <Icon name="ChevronLeft" size={16} />
+                        </button>
+                        <button
+                          onClick={() => setSelectedSlide((s) => (s + 1) % selectedItem.pictures.length)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
+                        >
+                          <Icon name="ChevronRight" size={16} />
+                        </button>
+                      </>
+                    )}
+                  </div>
                   {selectedItem.pictures.length > 1 && (
-                    <>
-                      <button
-                        onClick={() => setSelectedSlide((s) => (s - 1 + selectedItem.pictures.length) % selectedItem.pictures.length)}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
-                      >
-                        <Icon name="ChevronLeft" size={18} />
-                      </button>
-                      <button
-                        onClick={() => setSelectedSlide((s) => (s + 1) % selectedItem.pictures.length)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center hover:bg-primary/5"
-                      >
-                        <Icon name="ChevronRight" size={18} />
-                      </button>
-                    </>
+                    <div className="flex gap-2 overflow-x-auto pb-1">
+                      {selectedItem.pictures.map((pic, pi) => (
+                        <button
+                          key={pi}
+                          onClick={() => setSelectedSlide(pi)}
+                          className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${pi === selectedSlide ? "border-primary shadow-md" : "border-transparent opacity-60 hover:opacity-100"}`}
+                        >
+                          <img src={pic} alt="" className="w-full h-full object-contain bg-white p-1" />
+                        </button>
+                      ))}
+                    </div>
                   )}
                 </div>
-                {selectedItem.pictures.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto pb-1">
-                    {selectedItem.pictures.map((pic, pi) => (
-                      <button
-                        key={pi}
-                        onClick={() => setSelectedSlide(pi)}
-                        className={`flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all ${pi === selectedSlide ? "border-primary shadow-md" : "border-transparent opacity-60 hover:opacity-100"}`}
-                      >
-                        <img src={pic} alt="" className="w-full h-full object-contain bg-white p-1" />
-                      </button>
-                    ))}
-                  </div>
-                )}
+
+                {/* Заголовок + цена (рядом с фото на десктопе) */}
+                <div className="p-5 sm:p-6 flex flex-col justify-center gap-2 flex-1">
+                  {selectedItem.brand && (
+                    <span className="text-xs font-bold text-primary uppercase tracking-widest">{selectedItem.brand}</span>
+                  )}
+                  <h2 className="text-xl sm:text-2xl font-display font-black text-foreground leading-tight">{selectedItem.name}</h2>
+                  {selectedItem.price_display && (
+                    <p className="text-2xl sm:text-3xl font-black text-primary">{selectedItem.price_display}</p>
+                  )}
+                  <button
+                    onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
+                    className="hidden sm:block mt-2 w-full py-3 bg-primary text-white rounded-xl text-base font-bold hover:bg-primary/90 transition-all shadow-md"
+                  >
+                    Узнать подробней
+                  </button>
+                </div>
               </div>
 
-              {/* Информация */}
-              <div className="p-5 sm:p-8 flex flex-col gap-3">
-                {selectedItem.brand && (
-                  <span className="text-xs font-bold text-primary uppercase tracking-widest">{selectedItem.brand}</span>
-                )}
-                <h2 className="text-xl sm:text-2xl font-display font-black text-foreground leading-tight">{selectedItem.name}</h2>
-                {selectedItem.price_display && (
-                  <p className="text-2xl sm:text-3xl font-black text-primary">{selectedItem.price_display}</p>
-                )}
-
-                {/* Все характеристики */}
+              {/* Характеристики и описание — на всю ширину */}
+              <div className="px-5 sm:px-6 pb-6 flex flex-col gap-4 border-t border-border/40">
                 {selectedItem.all_params.length > 0 && (
-                  <div className="space-y-1.5">
-                    {selectedItem.all_params.map((p, pi) => (
-                      <div key={pi} className="flex justify-between gap-4 py-1 border-b border-border/50 text-sm">
-                        <span className="text-muted-foreground flex-shrink-0">{p.name}</span>
-                        <span className="font-medium text-foreground text-right">{p.value}</span>
-                      </div>
-                    ))}
+                  <div className="pt-4">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">Характеристики</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+                      {selectedItem.all_params.map((p, pi) => (
+                        <div key={pi} className="flex justify-between gap-4 py-1.5 border-b border-border/40 text-sm">
+                          <span className="text-muted-foreground">{p.name}</span>
+                          <span className="font-medium text-foreground text-right">{p.value}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
-                {/* Описание */}
                 {selectedItem.description && (
-                  <div
-                    className="text-sm text-muted-foreground leading-relaxed border-t border-border/50 pt-3"
-                    dangerouslySetInnerHTML={{ __html: selectedItem.description }}
-                  />
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">Описание</p>
+                    <div
+                      className="text-sm text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: selectedItem.description }}
+                    />
+                  </div>
                 )}
 
+                {/* Кнопка на мобиле */}
                 <button
                   onClick={() => { setSelectedItem(null); setInquiryItem(selectedItem); setInquiryName(""); setInquiryPhone(""); setInquirySent(false); }}
-                  className="w-full py-4 bg-primary text-white rounded-xl text-lg font-bold hover:bg-primary/90 transition-all shadow-md mt-2"
+                  className="sm:hidden w-full py-4 bg-primary text-white rounded-xl text-lg font-bold hover:bg-primary/90 transition-all shadow-md"
                 >
                   Узнать подробней
                 </button>
