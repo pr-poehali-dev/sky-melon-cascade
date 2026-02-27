@@ -299,7 +299,7 @@ const Index = () => {
                 {[
                   { icon: "TrendingDown",  text: "Меньше непросола и рекламаций" },
                   { icon: "Wind",          text: "Вакуум — быстрее процесс, меньше окисления" },
-                  { icon: "ArrowUpCircle", text: "Выход до +20–30% влаги при корректной технологии" },
+                  { icon: "ArrowUpCircle", text: "Увеличиваем выход готового продукта + 30–70%" },
                   { icon: "Shield",        text: "SUS304, санитарный конструктив, быстрая мойка" },
                 ].map((b, i) => (
                   <li key={i} className="flex items-center gap-3 text-base font-medium text-foreground">
@@ -711,8 +711,8 @@ const Index = () => {
                   { icon: "ShieldCheck",       title: "Пищевая нержавеющая сталь",      desc: "Соответствие санитарным нормам" },
                   { icon: "Droplets",          title: "Быстрая мойка",                  desc: "Форма барабана оптимизирована под скоростную очистку" },
                   { icon: "SlidersHorizontal", title: "Регулируемые параметры",         desc: "Скорость, время, вакуум и направление вращения" },
-                  { icon: "ListChecks",        title: "99 программ работы",             desc: "Сохранение режимов массирования" },
                   { icon: "Package",           title: "Рёбра целостности",              desc: "Рёбра сохраняют целостность кусков при массировании" },
+                  { icon: "ListChecks",        title: "99 программ работы",             desc: "Сохранение режимов массирования" },
                 ].map((feat, i) => (
                   <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all">
                     <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -738,11 +738,11 @@ const Index = () => {
                   { icon: "Grid3x3",        title: "84 иглы",                 desc: "Максимальное покрытие продукта" },
                   { icon: "Gauge",          title: "Давление до 4,3 бар",     desc: "Работа с вязкими маринадами без потери качества" },
                   { icon: "Zap",            title: "Подпружиненные иглы",     desc: "Не ломаются при контакте с костью, равномерно покрывают продукт" },
-                  { icon: "ListChecks",     title: "До 99 программ работы",   desc: "Время, интервалы, вакуум, скорость — всё сохраняется" },
                   { icon: "MoveHorizontal", title: "Зубчатый конвейер",       desc: "Боковые направляющие — продукт не сдвигается" },
                   { icon: "Ruler",          title: "Шаг 15–60 мм",            desc: "Точная настройка под любой продукт" },
                   { icon: "Repeat",         title: "Повторяемость",           desc: "Одинаковый шаг на каждой партии" },
                   { icon: "Droplets",       title: "Мойка без разбора корпуса", desc: "Быстрая санитарная обработка без простоев" },
+                  { icon: "ListChecks",     title: "До 99 программ работы",   desc: "Время, интервалы, вакуум, скорость — всё сохраняется" },
                 ].map((feat, i) => (
                   <div key={i} className="flex items-center gap-3 bg-white rounded-xl border border-border px-4 py-3 hover:border-primary/40 hover:shadow-sm transition-all">
                     <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -1133,7 +1133,7 @@ const Index = () => {
                 Мы предлагаем оборудование компании <strong className="text-foreground">Daribo</strong>. «Shanghai DARIBO Food Machinery Co., Ltd» — крупный производитель оборудования для пищевой промышленности, базирующийся в Шанхае.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-5">
-                Компания специализируется на разработке и производстве инновационного оборудования для переработки мяса, овощей и фруктов. Поставляет продукцию в США, Мексику, Францию, Индонезию, Таиланд, Филиппины и другие страны.
+                Специализация Daribo включает вакуумные массажеры (серия GRY, например DRB-GRY750L), автоматические инъекторы рассола, слайсеры, порционирующие машины, волчки для замороженного мяса, блокорезки, вакуумные фаршемесы, котлетные машины и полные производственные линии под ключ. Поставляет продукцию в США, Мексику, Францию, Индонезию, Таиланд, Филиппины и другие страны.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Специализация Daribo включает <strong className="text-foreground">вакуумные массажеры</strong> (серия GRY, например DRB-GRY750L), <strong className="text-foreground">инъекторы рассола</strong>, мясорезки, котлетные машины и полные производственные линии под ключ.
